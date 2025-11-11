@@ -1,0 +1,5843 @@
+# Introduction
+URL: /docs
+
+***
+
+title: Introduction
+icon: Presentation
+------------------
+
+# Echo
+
+Build AI apps without fronting the bill. Echo handles auth, billing, and metering so users pay for their own usage and you never touch infrastructure costs.
+
+## The problem with AI apps
+
+Generative AI is changing the way we build apps. Build a strong UX, call out to powerful models over API and ship value to your users.
+
+But these APIs are expensive and you, the developer, pay the bill.
+
+You need to be prepared to
+
+* Front API costs
+* Manage API keys
+* Cap usage from power users
+* Build per-user auth, metering and billing
+* Integrate Stripe
+
+## How Echo Fixes this
+
+Drop in Echo as a replacement for the [Vercel AI SDK](https://ai-sdk.dev/) and add an [Echo Sign-In component](/docs/components).
+When users call OpenAI (or the other 100+ models we support), requests route through Echo and they pay for their own usage.  You never front the costs.
+
+Set a markup percentage (e.g. 50%), and every token your users consume generates instant revenue. Echo settles the provider bill and returns your profit.
+
+No suprise bills, no API keys, no Stripe integration, and no infrastructure costs.
+
+## Starting Fresh
+
+To get started on a new app, use the `echo-start` CLI tool, which scaffolds a pre-configured Echo project:
+
+<Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+  <Tab value="npm">
+    ```sh lineNumbers
+    npx echo-start@latest --template next
+    ```
+  </Tab>
+
+  <Tab value="yarn">
+    ```sh lineNumbers
+    yarn dlx echo-start@latest --template next
+    ```
+  </Tab>
+
+  <Tab value="pnpm">
+    ```sh lineNumbers
+    pnpx echo-start@latest --template next
+    ```
+  </Tab>
+
+  <Tab value="bun">
+    ```sh lineNumbers
+    bunx echo-start@latest --template next
+    ```
+  </Tab>
+</Tabs>
+
+This will create a new Next.js app with Echo integration ready to go. For other templates and frameworks, check out our [templates section](/docs/getting-started/templates).
+
+## Existing Apps
+
+**Three integration patterns:**
+
+* [**Next.js SDK**](/docs/next-sdk) — Server-side auth with automatic token management
+* [**React SDK**](/docs/react-sdk) — OAuth2 + PKCE for secure client-side LLM calls
+* [**TypeScript SDK**](/docs/typescript-sdk) — API keys for backends and CLI tools
+
+The React and Next.js SDKs are opinionated wrappers around the TypeScript SDK, providing framework-specific patterns while the TypeScript SDK offers direct API access for maximum flexibility.
+
+<ExampleCards
+  cards={[
+  {
+    title: 'React',
+    icon: (
+      <img 
+        src="/icons/react.svg" 
+        alt="React" 
+        width={48}
+        height={48}
+        className="w-12 h-12"
+      />
+    ),
+    docsLink: '/docs/getting-started/react',
+    liveExampleLink: 'https://echo-react-boilerplate.vercel.app',
+    githubLink: 'https://github.com/Merit-Systems/echo/tree/master/templates/react',
+  },
+  {
+    title: 'Next.js',
+    icon: (
+      <img 
+        src="/icons/nextjs.svg" 
+        alt="Next.js" 
+        width={48}
+        height={48}
+        className="w-12 h-12"
+      />
+    ),
+    docsLink: '/docs/getting-started/next-js',
+    liveExampleLink: 'https://echo-next-boilerplate.vercel.app/',
+    githubLink: 'https://github.com/Merit-Systems/echo/tree/master/templates/next',
+  },
+  {
+    title: 'CLI',
+    icon: (
+      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+        <span className="text-white font-bold text-xl">{'>'}</span>
+      </div>
+    ),
+    docsLink: '/docs/getting-started/cli',
+    githubLink: 'https://github.com/Merit-Systems/echo/tree/master/echo-typescript-cli-example',
+  },
+]}
+/>
+
+## Templates
+
+We provide a variety of ready-to-use templates to help you get started quickly with Echo:
+
+### Core Templates
+
+* [**Next.js**](/docs/getting-started/templates#nextjs) — Full-stack Next.js app with Echo integration
+* [**React**](/docs/getting-started/templates#react) — Vite-powered React app with Echo SDK
+* [**Assistant UI**](/docs/getting-started/templates#assistant-ui) — Full-featured chat UI with `@assistant-ui/react`
+
+### Feature-Specific Templates
+
+* **Next.js Chat** — Chat interface built with Next.js and Echo
+* **Next.js Image Generation** — Image generation app with Echo billing
+* **Next.js Video** — Video generation app with Echo integration
+* **Next.js API Key** — Server-side API key management template
+* **React Chat** — Chat interface for React apps
+* **React Image** — Image generation for React apps
+
+All templates are available through `echo-start` or in the [GitHub repository](https://github.com/Merit-Systems/echo/tree/master/templates). Visit our [templates documentation](/docs/getting-started/templates) for detailed setup instructions.
+
+
+# Why Echo?
+URL: /docs/why-echo
+
+***
+
+title: Why Echo?
+description: Is Echo right for your AI app?
+icon: CircleHelp
+----------------
+
+# Why Echo?
+
+Echo is designed for indie developers and small teams building consumer AI apps who want to launch fast without fronting infrastructure costs.
+
+## You Should Use Echo If:
+
+* You're building a **consumer AI app** (chat, image generation, code tools)
+* You want to **launch in minutes**, not weeks
+* You're considering **BYOK** and want to streamline UX
+* You **can't afford** to front $1K+/month in API costs
+* You want **revenue from day one** with markup pricing
+* Your users understand **pay-as-you-go** pricing
+
+## You Probably Don't Need Echo If:
+
+* You're building **enterprise B2B** (they expect seat-based pricing)
+* You need **complex billing logic** beyond usage-based pricing
+* You want to **subsidize AI costs** as a growth strategy
+* You already have auth/billing infrastructure working well
+
+## Next Steps
+
+Ready to build? Start with:
+
+* [Templates](/docs/getting-started/templates) for a pre-built app
+* [React Guide](/docs/getting-started/react) for SPAs
+* [Next.js Guide](/docs/getting-started/next-js) for full-stack apps
+
+
+# API Reference
+URL: /docs/advanced/api-reference
+
+***
+
+title: API Reference
+description: V1 API reference for programmatic access to Echo
+-------------------------------------------------------------
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# API Reference
+
+The Echo V1 API provides programmatic access for SDKs, CLI tools, and applications. All endpoints are prefixed with `/api/v1/`.
+
+<Callout type="info">
+  All API endpoints use JSON request/response format. Most endpoints require
+  authentication via API keys or JWT tokens.
+</Callout>
+
+## Authentication
+
+The V1 API supports two authentication methods:
+
+### API Keys
+
+API keys are the primary authentication method for programmatic access. Include your API key in the request header:
+
+```http
+Authorization: Bearer your_api_key_here
+```
+
+### JWT Tokens
+
+JWT tokens are used for OAuth flows and temporary access. Include JWT tokens in either header:
+
+```http
+Authorization: Bearer your_jwt_token_here
+```
+
+or
+
+```http
+X-Echo-Token: your_jwt_token_here
+```
+
+## Applications
+
+### List User Apps
+
+```http
+GET /api/v1/apps
+```
+
+List all Echo apps owned by the authenticated user.
+
+**Authentication:** API key or JWT token required
+
+**Response Type:**
+
+```typescript
+{
+  items: Array<App>;
+  has_next: boolean;
+  page: number;
+  page_size: number;
+  total_count: number;
+}
+```
+
+<AutoTypeTable path="src/services/db/apps/list.ts" type={`Awaited<ReturnType<typeof listOwnerApps>>["items"][number]`} />
+
+```http
+GET /api/v1/apps/{id}
+```
+
+Get detailed app information for programmatic access.
+
+**Authentication:** API key or JWT token required\
+**Path Parameters:**
+
+* `id` (UUID) - App ID
+
+**Response Type:**
+
+<AutoTypeTable path="src/services/db/user/balance.ts" type={`Awaited<ReturnType<typeof getUserGlobalBalance>>`} />
+
+## Balance & Billing
+
+### Get User Balance
+
+```http
+GET /api/v1/balance
+```
+
+Get authenticated user's credit balance.
+
+**Authentication:** API key or JWT token required\
+**Query Parameters:**
+
+* `echoAppId` (UUID, optional) - Get app-specific balance instead of global
+
+**Response Type:**
+
+<AutoTypeTable path="src/services/db/user/balance.ts" type={`Awaited<ReturnType<typeof getUserGlobalBalance>>`} />
+
+### Get Free Tier Balance
+
+```http
+POST /api/v1/balance/{appId}/free
+```
+
+Get user's free tier spending information for a specific app.
+
+**Authentication:** API key or JWT token required
+
+**Response Type:**
+
+```typescript
+{
+  spendPoolBalance: number;
+  userSpendInfo: UserSpendInfo;
+}
+```
+
+<AutoTypeTable path="src/services/db/user/app-spend-pool.ts" type={`Awaited<ReturnType<typeof getUserSpendInfoForApp>>["userSpendInfo"]`} />
+
+## Payments
+
+### Create Payment Link
+
+```http
+POST /api/v1/stripe/payment-link
+```
+
+Generate Stripe payment link for credit purchases.
+
+**Authentication:** API key or JWT token required
+
+**Request Body:**
+
+```typescript
+{
+  amount: number;
+  successUrl?: string;
+}
+```
+
+**Response Type:**
+
+```typescript
+{
+  paymentUrl: string;
+  sessionId: string;
+  expiresAt: string;
+}
+```
+
+<Callout type="info">
+  Payment amounts are in USD. The `successUrl` parameter is optional and will
+  redirect users after successful payment.
+</Callout>
+
+## Models & Capabilities
+
+### Get Supported Models
+
+```http
+GET /api/v1/supported-models
+```
+
+Get list of supported AI models with pricing information.
+
+**Authentication:** None required
+
+**Response Type:**
+
+```typescript
+{
+  models: SupportedModel[];
+  models_by_provider: Record<string, string[]>;
+}
+```
+
+**SupportedModel Interface:**
+
+```typescript
+interface SupportedModel {
+  id: string;
+  name: string;
+  provider: string;
+  inputPrice: number;
+  outputPrice: number;
+  contextLength: number;
+}
+```
+
+## User Management
+
+### Get User Info
+
+```http
+GET /api/v1/user
+```
+
+Get authenticated user profile information.
+
+**Authentication:** API key or JWT token required
+
+**Response Type:**
+
+```typescript
+{
+  id: string;
+  email: string;
+  name: string | null;
+  createdAt: string;
+  updatedAt: string;
+  totalPaid: number;
+  totalSpent: number;
+}
+```
+
+### Register Referral Code
+
+```http
+POST /api/v1/user/referral
+```
+
+Apply a referral code for credits on a specific app.
+
+**Authentication:** API key or JWT token required
+
+**Request Body:**
+
+```typescript
+{
+  echoAppId: string;
+  code: string;
+}
+```
+
+**Response Type:**
+
+```typescript
+{
+  success: boolean;
+  message: string;
+  creditsAwarded?: number;
+}
+```
+
+## Error Responses
+
+All endpoints return appropriate HTTP status codes and JSON error responses:
+
+```json
+{
+  "error": "string",
+  "message": "string",
+  "statusCode": "number"
+}
+```
+
+### Common Status Codes
+
+* `200 OK` - Success
+* `201 Created` - Resource created
+* `400 Bad Request` - Invalid request data
+* `401 Unauthorized` - Authentication required
+* `403 Forbidden` - Insufficient permissions
+* `404 Not Found` - Resource not found
+* `500 Internal Server Error` - Server error
+
+<Callout type="info">
+  All endpoints require HTTPS in production environments. UUID parameters are
+  validated for proper format.
+</Callout>
+
+
+# Authorized Callback Urls
+URL: /docs/advanced/callback-urls
+
+***
+
+title: Authorized Callback Urls
+description: How to authorize callback URLs for your app correctly
+------------------------------------------------------------------
+
+# Authorized Callback URLs
+
+Authorized callback URLs specify where users can be redirected after authentication. This is a critical security feature that prevents unauthorized redirects.
+
+## Configuration
+
+**Set your callback URL to your application's homepage URL.** This should be the deployed URL where your application is hosted in production.
+
+Examples:
+
+* `https://myapp.com`
+* `https://myapp.vercel.app`
+* `https://subdomain.mycompany.com`
+
+## Development
+
+**Localhost URLs are always allowed** for development purposes. You don't need to explicitly add localhost URLs to your authorized callback list.
+
+## Next SDK Caveat
+
+**Very important** - When productionizing your application with the Next SDK, you will need to append `/api/echo/callback` to your app's homepage route when inputting the correct authorized callback URL.
+
+For example:
+
+* If your app is hosted at `https://myapp.com`
+* Set your authorized callback URL to `https://myapp.com/api/echo/callback`
+
+
+# Direct Provider Clients
+URL: /docs/advanced/direct-provider-clients
+
+***
+
+title: Direct Provider Clients
+description: Use OpenAI, Anthropic, Google Gemini, or other provider SDKs directly without Echo SDK wrappers
+------------------------------------------------------------------------------------------------------------
+
+# Direct Provider Clients
+
+You can use provider SDKs directly (OpenAI, Anthropic, Google, etc.) with Echo by overriding the base URL and API key. This is useful when you want to use provider-specific features or avoid the Echo SDK layer.
+
+## OpenAI SDK
+
+```typescript tab="TypeScript"
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  baseURL: 'https://echo.router.merit.systems',
+  apiKey: process.env.ECHO_API_KEY, // Your Echo API key
+});
+
+const response = await openai.chat.completions.create({
+  model: 'gpt-4',
+  messages: [{ role: 'user', content: 'Hello!' }],
+});
+```
+
+```python tab="Python"
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://echo.router.merit.systems",
+    api_key="your_echo_api_key"
+)
+
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+```
+
+## Anthropic SDK
+
+```typescript tab="TypeScript"
+import Anthropic from '@anthropic-ai/sdk';
+
+const anthropic = new Anthropic({
+  baseURL: 'https://echo.router.merit.systems',
+  apiKey: process.env.ECHO_API_KEY,
+});
+
+const response = await anthropic.messages.create({
+  model: 'claude-3-5-sonnet-20241022',
+  max_tokens: 1024,
+  messages: [{ role: 'user', content: 'Hello!' }],
+});
+```
+
+```python tab="Python"
+from anthropic import Anthropic
+
+client = Anthropic(
+    base_url="https://echo.router.merit.systems",
+    api_key="your_echo_api_key"
+)
+
+response = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+```
+
+## Google Gemini SDK
+
+```typescript tab="TypeScript"
+import { GoogleGenAI } from '@google/genai';
+
+const genAI = new GoogleGenAI({
+  apiKey: process.env.ECHO_API_KEY,
+  httpOptions: {
+    baseUrl: 'https://echo.router.merit.systems',
+    apiVersion: 'v1',
+  },
+});
+
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+const result = await model.generateContent('Hello!');
+const response = result.text();
+```
+
+```python tab="Python"
+import google.generativeai as genai
+
+# Configure with Echo proxy
+genai.configure(
+    api_key="your_echo_api_key",
+    transport="rest",
+    client_options={"api_endpoint": "https://echo.router.merit.systems/v1"}
+)
+
+model = genai.GenerativeModel('gemini-1.5-pro')
+response = model.generate_content('Hello!')
+print(response.text)
+```
+
+## Authentication Options
+
+You can authenticate with Echo using either:
+
+### API Key (Recommended for Server-Side)
+
+Use your Echo API key from the dashboard:
+
+```typescript
+{
+  apiKey: process.env.ECHO_API_KEY;
+}
+```
+
+### OAuth Access Token (For Client-Side)
+
+Use an OAuth access token obtained from the OAuth flow:
+
+```typescript
+{
+  apiKey: accessToken; // JWT token from OAuth
+}
+```
+
+<Callout type="info">
+  Access tokens are short-lived JWTs obtained through the OAuth2 + PKCE flow.
+  They're ideal for client-side applications where you can't safely store API
+  keys.
+</Callout>
+
+## Streaming Responses
+
+All streaming features work as expected:
+
+```typescript
+const stream = await openai.chat.completions.create({
+  model: 'gpt-4',
+  messages: [{ role: 'user', content: 'Tell me a story' }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  process.stdout.write(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+
+# How Echo Works
+URL: /docs/advanced/how-echo-works
+
+***
+
+title: How Echo Works
+description: Technical architecture guide for Echo's proxy layer, authentication, and billing system
+----------------------------------------------------------------------------------------------------
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# How Echo Works
+
+Echo is a proxy layer that handles authentication, metering, and billing for LLM applications. This guide explains the technical architecture and integration patterns.
+
+## System Overview & Architecture
+
+Echo operates as a three-layer stack that sits between your application and LLM providers:
+
+<Mermaid>
+  {`graph TB
+      A[Your Application] --> B[Echo SDK]
+      B --> C[Echo Proxy Layer]
+      C --> D[OpenAI/Anthropic/Claude]
+      C --> E[Billing & Analytics]
+      C --> F[User Management]`}
+</Mermaid>
+
+### Core Components
+
+**Echo Control** (`packages/app/control`)
+
+* Web dashboard for app management, user analytics, billing
+* PostgreSQL database with Prisma ORM
+* NextAuth sessions for web UI authentication
+
+**Echo Server** (`packages/app/server`)
+
+* API proxy that intercepts LLM requests
+* Handles authentication validation and usage metering
+* Routes requests to appropriate LLM providers
+* Records transactions and calculates costs in real-time
+
+**SDK Ecosystem**
+
+* `echo-typescript-sdk`: Universal client for all platforms
+* `echo-react-sdk`: OAuth2+PKCE for client-side LLM calls
+* `echo-next-sdk`: Server-side integration patterns
+
+### Request Flow
+
+Every LLM request follows this path:
+
+1. **Authentication**: SDK includes API key or JWT token
+2. **Validation**: Echo proxy validates credentials and permissions
+3. **Routing**: Request forwarded to appropriate LLM provider
+4. **Metering**: Response tokens counted and costs calculated
+5. **Billing**: Transaction recorded with user/app attribution
+6. **Response**: LLM response returned to your application
+
+<Callout type="info">
+  Echo acts as a transparent proxy. Your application uses standard OpenAI SDK patterns but gains billing, analytics, and user management automatically.
+</Callout>
+
+## The Proxy Layer
+
+Echo Server handles the complex middleware between your app and LLM providers. Here's how each component works:
+
+### Request Interception
+
+All LLM requests route through Echo's proxy endpoints:
+
+```typescript
+// Your app calls this
+const response = await openai.chat.completions.create({
+  model: "gpt-5",
+  messages: [{ role: "user", content: "Hello" }]
+});
+
+// Echo intercepts at https://echo.router.merit.systems/v1/chat/completions
+// Validates auth, meters usage, forwards to OpenAI, records billing
+```
+
+The proxy preserves OpenAI's API contract while injecting billing logic:
+
+```typescript
+// echo-server/src/routes/chat/completions.ts
+export async function handleChatCompletion(request: AuthenticatedRequest) {
+  // 1. Extract and validate authentication
+  const { user, echoApp } = request.auth;
+  
+  // 2. Forward to LLM provider
+  const llmResponse = await provider.chat.completions.create(request.body);
+  
+  // 3. Calculate costs from token usage
+  const cost = calculateTokenCost(llmResponse.usage, request.body.model);
+  
+  // 4. Record transaction
+  await recordTransaction({
+    userId: user.id,
+    echoAppId: echoApp.id,
+    cost,
+    tokens: llmResponse.usage
+  });
+  
+  return llmResponse;
+}
+```
+
+## Authentication & Security Architecture
+
+Echo supports two distinct authentication patterns optimized for different use cases:
+
+### API Key Authentication (Backend/Server-Side)
+
+Traditional server-side pattern for backend applications:
+
+```typescript
+// Your server code
+import { EchoClient } from '@merit-systems/echo-typescript-sdk';
+
+const client = new EchoClient({
+  apiKey: process.env.ECHO_API_KEY // Scoped to specific Echo app
+});
+
+const response = await client.models.chatCompletion({
+  model: "gpt-5",
+  messages: [{ role: "user", content: "Hello" }]
+});
+```
+
+API key validation flow:
+
+1. Extract key from `Authorization: Bearer <key>` header
+2. Hash and lookup in database with app association
+3. Validate key is active and app is not archived
+4. Attach user and app context to request
+
+### OAuth2 + PKCE Authentication (Frontend/Client-Side)
+
+Pattern that enables secure LLM calls directly from browsers:
+
+```typescript
+// React component - no API keys needed
+import { useEchoOpenAI } from '@merit-systems/echo-react-sdk';
+
+function ChatComponent() {
+  const { openai, isReady } = useEchoOpenAI();
+  
+  // This runs in the browser with user-scoped JWT tokens
+  const response = await openai.chat.completions.create({
+    model: "gpt-5", 
+    messages: [{ role: "user", content: "Hello" }]
+  });
+}
+```
+
+OAuth2 + PKCE flow eliminates API key exposure:
+
+1. **Authorization Request**: User redirects to Echo OAuth endpoint
+2. **User Consent**: User authorizes your app to access their Echo balance
+3. **Code Exchange**: Your app exchanges authorization code for JWT tokens
+4. **Token Usage**: Short-lived JWTs authenticate LLM requests
+5. **Automatic Refresh**: SDK handles token renewal transparently
+
+This dual authentication model supports both traditional backend patterns and modern frontend architectures while maintaining security and proper billing attribution.
+
+
+# Advanced
+URL: /docs/advanced
+
+***
+
+title: Advanced
+description: Advanced topics
+----------------------------
+
+* **[How Echo Works](/docs/advanced/how-echo-works)** - Technical architecture guide for Echo's proxy layer, authentication, and billing system.
+
+* **[API Reference](/docs/advanced/api-reference)** - Complete V1 API reference for programmatic access to Echo endpoints.
+
+
+# Raw Proxy Access
+URL: /docs/advanced/raw-proxy
+
+***
+
+title: Raw Proxy Access
+description: Use Echo from any language or platform by calling the OpenAI-compatible proxy directly
+---------------------------------------------------------------------------------------------------
+
+# Raw Proxy Access
+
+Echo exposes an OpenAI-compatible proxy that can be used from any language or HTTP client. This is ideal for platforms and languages where no Echo SDK exists.
+
+## Base URL
+
+All requests should be sent to:
+
+```
+https://echo.router.merit.systems
+```
+
+## Authentication
+
+Include your Echo API key or OAuth access token in the Authorization header:
+
+```http
+Authorization: Bearer your_echo_api_key_or_token
+```
+
+## Endpoints
+
+Echo proxies the standard OpenAI API endpoints:
+
+### Chat Completions
+
+```http
+POST https://echo.router.merit.systems/v1/chat/completions
+```
+
+Refer to [OpenAI API Reference](https://platform.openai.com/docs/api-reference/chat) for more details.
+
+### Responses
+
+```http
+POST https://echo.router.merit.systems/v1/responses
+```
+
+Refer to [OpenAI API Reference](https://platform.openai.com/docs/api-reference/responses) for more details.
+
+### Images
+
+```http
+POST https://echo.router.merit.systems/v1/images/generations
+```
+
+Refer to [OpenAI API Reference](https://platform.openai.com/docs/api-reference/images) for more details.
+
+### Videos
+
+```http
+POST https://echo.router.merit.systems/v1/videos
+```
+
+Refer to [OpenAI API Reference](https://platform.openai.com/docs/api-reference/videos) for more details.
+
+## Examples
+
+```bash tab="cURL"
+curl https://echo.router.merit.systems/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your_echo_api_key" \
+  -d '{
+    "model": "gpt-4",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+```python tab="Python"
+import requests
+
+response = requests.post(
+    "https://echo.router.merit.systems/v1/chat/completions",
+    headers={
+        "Authorization": "Bearer your_echo_api_key",
+        "Content-Type": "application/json"
+    },
+    json={
+        "model": "gpt-4",
+        "messages": [{"role": "user", "content": "Hello!"}]
+    }
+)
+
+print(response.json())
+```
+
+```ruby tab="Ruby"
+require 'net/http'
+require 'json'
+
+uri = URI('https://echo.router.merit.systems/v1/chat/completions')
+request = Net::HTTP::Post.new(uri)
+request['Authorization'] = 'Bearer your_echo_api_key'
+request['Content-Type'] = 'application/json'
+request.body = {
+  model: 'gpt-4',
+  messages: [{ role: 'user', content: 'Hello!' }]
+}.to_json
+
+response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+  http.request(request)
+end
+
+puts response.body
+```
+
+```go tab="Go"
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    url := "https://echo.router.merit.systems/v1/chat/completions"
+
+    payload := map[string]interface{}{
+        "model": "gpt-4",
+        "messages": []map[string]string{
+            {"role": "user", "content": "Hello!"},
+        },
+    }
+
+    jsonData, _ := json.Marshal(payload)
+
+    req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    req.Header.Set("Authorization", "Bearer your_echo_api_key")
+    req.Header.Set("Content-Type", "application/json")
+
+    client := &http.Client{}
+    resp, _ := client.Do(req)
+    defer resp.Body.Close()
+
+    var result map[string]interface{}
+    json.NewDecoder(resp.Body).Decode(&result)
+    fmt.Println(result)
+}
+```
+
+```rust tab="Rust"
+use reqwest;
+use serde_json::json;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = reqwest::Client::new();
+
+    let response = client
+        .post("https://echo.router.merit.systems/v1/chat/completions")
+        .header("Authorization", "Bearer your_echo_api_key")
+        .json(&json!({
+            "model": "gpt-4",
+            "messages": [{"role": "user", "content": "Hello!"}]
+        }))
+        .send()
+        .await?;
+
+    println!("{}", response.text().await?);
+    Ok(())
+}
+```
+
+```php tab="PHP"
+<?php
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, 'https://echo.router.merit.systems/v1/chat/completions');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Authorization: Bearer your_echo_api_key',
+    'Content-Type: application/json'
+]);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+    'model' => 'gpt-4',
+    'messages' => [
+        ['role' => 'user', 'content' => 'Hello!']
+    ]
+]));
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+print_r(json_decode($response, true));
+?>
+```
+
+## Streaming
+
+To enable streaming, add `"stream": true` to your request:
+
+```bash
+curl https://echo.router.merit.systems/v1/chat/completions \
+  -H "Authorization: Bearer your_echo_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4",
+    "messages": [{"role": "user", "content": "Hello!"}],
+    "stream": true
+  }'
+```
+
+Streaming responses use Server-Sent Events (SSE) format.
+
+## Response Format
+
+Responses follow the OpenAI API format. See the [OpenAI API documentation](https://platform.openai.com/docs/api-reference/chat/create) for complete response schemas.
+
+Example response:
+
+```json
+{
+  "id": "chatcmpl-123",
+  "object": "chat.completion",
+  "created": 1677652288,
+  "model": "gpt-4",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hello! How can I help you today?"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 9,
+    "completion_tokens": 12,
+    "total_tokens": 21
+  }
+}
+```
+
+## Error Handling
+
+Echo returns standard HTTP error codes:
+
+* `401 Unauthorized` - Invalid or missing API key
+* `402 Payment Required` - Insufficient credits
+* `429 Too Many Requests` - Rate limit exceeded
+* `500 Internal Server Error` - Server error
+
+<Callout type="info">
+  The proxy is fully compatible with the OpenAI API specification. Any HTTP
+  client or library that works with OpenAI will work with Echo by simply
+  changing the base URL and API key.
+</Callout>
+
+
+# Injecting System Prompts
+URL: /docs/advanced/system-prompt
+
+***
+
+title: Injecting System Prompts
+description: How to use Vercel AI's SDK to give context to your LLM.
+--------------------------------------------------------------------
+
+# Next SDK
+
+## Passing System Prompts from Client to Server
+
+When building AI applications, you often need to provide context or instructions to your language model through system prompts. Here's how to pass system prompts from your client-side code to your server-side API route using the Vercel AI SDK.
+
+### Client
+
+On the client side, you can pass additional data like system prompts through the `body` parameter of the `sendMessage` function:
+
+```tsx
+const systemText: string = "Be as sycophantic as possible."
+
+sendMessage({ 
+  text: "Am i absolutely right?",
+},
+{
+  body: { systemText },
+});
+```
+
+The `systemText` variable should contain your system prompt or context that you want to provide to the language model.
+
+### Server
+
+On the server side (in your API route), extract the system prompt from the request body and use it in your `streamText` call:
+
+```tsx
+const { messages, systemText } = await req.json();
+const result = streamText({
+  model: openai("gpt-5"),
+  system: systemText,
+  messages: convertToModelMessages(messages),
+});
+```
+
+This pattern allows you to dynamically provide context to your language model based on client-side state or user interactions, making your AI applications more flexible and context-aware.
+
+# React SDK
+
+## Client-Side System Prompts
+
+With the React SDK, you can handle system prompts entirely on the client side without needing a server API route. This is useful for simpler applications or when you want to keep everything client-side.
+
+```tsx
+
+const handleGen = async (name: string) => {
+    const systemText = `Be as sycophantic as possible for ${name}.`;
+    
+    const { text } = await generateText({
+        model: openai('gpt-5'),
+        system: systemText,
+        prompt: 'Am i absolutely right?'
+    });
+    
+    setResult(text);
+};
+```
+
+
+# Customization
+URL: /docs/components/customization
+
+***
+
+title: Customization
+description: How to customize and theme Echo Components
+-------------------------------------------------------
+
+# Customization
+
+Echo Components are designed to be highly customizable while maintaining consistency with the Echo design system. This guide covers various ways to customize components to match your application's needs.
+
+## Styling Approaches
+
+### 1. CSS Classes
+
+The most common way to customize Echo Components is through CSS classes:
+
+```tsx
+import { Button } from '@/components/echo-button';
+
+// Custom styling with Tailwind classes
+<Button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3">
+  Custom Button
+</Button>
+```
+
+### 2. CSS Variables
+
+Override CSS variables for global theming:
+
+```css
+:root {
+  --primary: 220 100% 50%; /* Custom primary color */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 220 9% 46%;
+}
+```
+
+### 3. Component Props
+
+Many components accept styling props:
+
+```tsx
+import { MoneyInput } from '@/components/money-input';
+
+<MoneyInput
+  className="border-2 border-blue-500"
+  inputClassName="text-lg font-bold"
+  prefixClassName="bg-blue-100"
+  setAmount={setAmount}
+/>
+```
+
+## Theme Customization
+
+### Light and Dark Themes
+
+Echo Components support both light and dark themes out of the box:
+
+```css
+/* Light theme */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+}
+
+/* Dark theme */
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+}
+```
+
+### Custom Color Schemes
+
+Create your own color schemes:
+
+```css
+/* Brand colors */
+.brand-theme {
+  --primary: 142 76% 36%; /* Green primary */
+  --primary-foreground: 355 7% 97%;
+  --secondary: 142 76% 36%;
+  --secondary-foreground: 355 7% 97%;
+}
+
+/* Corporate theme */
+.corporate-theme {
+  --primary: 221 83% 53%; /* Blue primary */
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+}
+```
+
+## Component-Specific Customization
+
+### Echo Button Customization
+
+```tsx
+import { Button, buttonVariants } from '@/components/echo-button';
+import { cn } from '@/lib/utils';
+import { cva } from 'class-variance-authority';
+
+// Custom variant
+const customButtonVariants = cva(
+  buttonVariants.base,
+  {
+    variants: {
+      variant: {
+        ...buttonVariants.variants.variant,
+        custom: "bg-gradient-to-r from-purple-500 to-pink-500 text-white",
+      },
+    },
+  }
+);
+
+// Usage
+<Button variant="custom">Custom Button</Button>
+```
+
+### Money Input Customization
+
+```tsx
+import { MoneyInput } from '@/components/money-input';
+
+function CustomMoneyInput() {
+  return (
+    <MoneyInput
+      setAmount={setAmount}
+      className="border-2 border-green-500 rounded-lg"
+      inputClassName="text-xl font-mono"
+      prefixClassName="bg-green-100 text-green-800"
+      hideDollarSign={false}
+      decimalPlaces={4}
+      placeholder="Enter custom amount"
+    />
+  );
+}
+```
+
+### Echo Account Customization
+
+```tsx
+import { EchoAccount } from '@/components/echo-account-react';
+
+function CustomEchoAccount() {
+  return (
+    <EchoAccount
+      className="shadow-lg border-2 border-blue-200"
+      showBalance={true}
+      showTopUp={true}
+      variant="compact"
+    />
+  );
+}
+```
+
+## Advanced Customization
+
+### Creating Custom Components
+
+You can extend Echo Components to create your own:
+
+```tsx
+import { Button } from '@/components/echo-button';
+import { cn } from '@/lib/utils';
+
+interface CustomButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  loading?: boolean;
+  icon?: React.ReactNode;
+}
+
+export function CustomButton({ 
+  loading, 
+  icon, 
+  children, 
+  className, 
+  ...props 
+}: CustomButtonProps) {
+  return (
+    <Button
+      className={cn("relative", className)}
+      disabled={loading}
+      {...props}
+    >
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+        </div>
+      )}
+      <span className={cn(loading && "opacity-0")}>
+        {icon && <span className="mr-2">{icon}</span>}
+        {children}
+      </span>
+    </Button>
+  );
+}
+```
+
+### Custom Hooks
+
+Create custom hooks for component logic:
+
+```tsx
+import { useState, useEffect } from 'react';
+import { useEcho } from '@merit-systems/echo-react-sdk';
+
+export function useEchoAccount() {
+  const echo = useEcho();
+  const [balance, setBalance] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (echo?.user) {
+      // Fetch balance
+      setLoading(false);
+    }
+  }, [echo?.user]);
+
+  return {
+    balance,
+    loading,
+    user: echo?.user,
+    isAuthenticated: !!echo?.user,
+  };
+}
+```
+
+## Responsive Design
+
+### Mobile-First Approach
+
+Design components to work well on all screen sizes:
+
+```tsx
+import { Button } from '@/components/echo-button';
+
+function ResponsiveButton() {
+  return (
+    <Button
+      className="
+        w-full sm:w-auto
+        text-sm sm:text-base
+        px-4 sm:px-6
+        py-2 sm:py-3
+      "
+    >
+      Responsive Button
+    </Button>
+  );
+}
+```
+
+### Breakpoint-Specific Styling
+
+```tsx
+import { EchoAccount } from '@/components/echo-account-react';
+
+function ResponsiveEchoAccount() {
+  return (
+    <EchoAccount
+      className="
+        hidden md:block
+        lg:shadow-lg
+        xl:border-2
+      "
+    />
+  );
+}
+```
+
+## Performance Optimization
+
+### Memoization
+
+Use React.memo for components that don't need frequent re-renders:
+
+```tsx
+import { memo } from 'react';
+import { Button } from '@/components/echo-button';
+
+export const MemoizedButton = memo(Button);
+```
+
+### Lazy Loading
+
+Lazy load heavy components:
+
+```tsx
+import { lazy, Suspense } from 'react';
+
+const EchoAccount = lazy(() => import('@/components/echo-account-react'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EchoAccount />
+    </Suspense>
+  );
+}
+```
+
+## Testing Customizations
+
+### Unit Tests
+
+Test your customizations with unit tests:
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import { CustomButton } from './CustomButton';
+
+test('renders custom button with loading state', () => {
+  render(<CustomButton loading>Click me</CustomButton>);
+  
+  expect(screen.getByRole('button')).toBeDisabled();
+  expect(screen.getByText('Click me')).toHaveClass('opacity-0');
+});
+```
+
+### Visual Regression Tests
+
+Use tools like Chromatic or Percy to catch visual regressions:
+
+```tsx
+import { CustomButton } from './CustomButton';
+
+export const LoadingState = () => (
+  <CustomButton loading>Loading...</CustomButton>
+);
+
+export const WithIcon = () => (
+  <CustomButton icon={<span>🚀</span>}>Launch</CustomButton>
+);
+```
+
+## Best Practices
+
+### Consistency
+
+* Maintain consistent spacing and typography
+* Use the same color palette throughout your app
+* Follow established patterns for similar components
+
+### Accessibility
+
+* Ensure custom colors meet contrast requirements
+* Test with keyboard navigation
+* Provide proper ARIA labels for custom components
+
+### Performance
+
+* Avoid unnecessary re-renders
+* Use CSS classes instead of inline styles when possible
+* Optimize images and assets
+
+### Maintenance
+
+* Document your customizations
+* Use version control for component modifications
+* Keep track of breaking changes in updates
+
+## Migration Guide
+
+### Updating Components
+
+When updating Echo Components:
+
+1. **Backup your customizations** - Save your custom code
+2. **Check changelog** - Review what changed in the new version
+3. **Test thoroughly** - Ensure your customizations still work
+4. **Update gradually** - Update one component at a time
+
+### Breaking Changes
+
+Common breaking changes to watch for:
+
+* **Prop changes** - New required props or removed props
+* **CSS class changes** - Updated class names
+* **API changes** - Modified component interfaces
+
+### Rollback Strategy
+
+Have a rollback plan ready:
+
+```bash
+# Keep previous versions
+git tag v1.0.0
+git tag v1.1.0
+
+# Rollback if needed
+git checkout v1.0.0
+```
+
+## Examples
+
+### Complete Custom Theme
+
+```css
+/* custom-theme.css */
+:root {
+  /* Brand colors */
+  --primary: 142 76% 36%;
+  --primary-foreground: 355 7% 97%;
+  --secondary: 142 76% 36%;
+  --secondary-foreground: 355 7% 97%;
+  
+  /* Custom spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  
+  /* Custom shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+```
+
+### Custom Component Library
+
+```tsx
+// components/custom/Button.tsx
+import { Button as EchoButton } from '@/components/echo-button';
+import { cn } from '@/lib/utils';
+
+interface CustomButtonProps {
+  variant?: 'primary' | 'secondary' | 'danger';
+  size?: 'sm' | 'md' | 'lg';
+  loading?: boolean;
+}
+
+export function CustomButton({ 
+  variant = 'primary', 
+  size = 'md',
+  loading = false,
+  className,
+  children,
+  ...props 
+}: CustomButtonProps) {
+  return (
+    <EchoButton
+      className={cn(
+        // Custom variants
+        {
+          'bg-green-500 hover:bg-green-600': variant === 'primary',
+          'bg-gray-500 hover:bg-gray-600': variant === 'secondary',
+          'bg-red-500 hover:bg-red-600': variant === 'danger',
+        },
+        // Custom sizes
+        {
+          'px-3 py-1 text-sm': size === 'sm',
+          'px-4 py-2 text-base': size === 'md',
+          'px-6 py-3 text-lg': size === 'lg',
+        },
+        // Loading state
+        loading && 'opacity-50 cursor-not-allowed',
+        className
+      )}
+      disabled={loading}
+      {...props}
+    >
+      {loading ? 'Loading...' : children}
+    </EchoButton>
+  );
+}
+```
+
+
+# Echo Account Component
+URL: /docs/components/echo-account
+
+***
+
+title: Echo Account Component
+description: Complete guide to the Echo Account component
+---------------------------------------------------------
+
+# Echo Account Component
+
+The Echo Account component is a comprehensive user account management interface that provides everything you need for user authentication, balance display, and account management in your Echo applications.
+
+## Overview
+
+The Echo Account component includes:
+
+* **User authentication status** - Shows login/logout functionality
+* **Balance display** - Real-time user balance with currency formatting
+* **Top-up functionality** - Easy way for users to add funds
+* **User profile management** - Avatar, name, and account details
+* **Responsive design** - Works on desktop and mobile devices
+
+## Installation
+
+### React Version
+
+```bash
+pnpm dlx shadcn@latest add https://echo-components.com/r/echo-account-react.json
+```
+
+### Next.js Version
+
+```bash
+pnpm dlx shadcn@latest add https://echo-components.com/r/echo-account-next.json
+```
+
+## Basic Usage
+
+### React
+
+```tsx
+import { EchoAccount } from '@/components/echo-account-react';
+
+export default function MyApp() {
+  return (
+    <div>
+      <h1>My Echo App</h1>
+      <EchoAccount />
+    </div>
+  );
+}
+```
+
+### Next.js
+
+```tsx
+import { EchoAccount } from '@/components/echo-account-next';
+
+export default function MyApp() {
+  return (
+    <div>
+      <h1>My Echo App</h1>
+      <EchoAccount />
+    </div>
+  );
+}
+```
+
+## Component Structure
+
+The Echo Account component is composed of several sub-components:
+
+### EchoAccountButton
+
+The main button that triggers the account popover:
+
+```tsx
+import { EchoAccountButton } from '@/components/echo-account-button/echo-account';
+import { useEcho } from '@merit-systems/echo-react-sdk';
+
+// Usage with Echo context
+const echo = useEcho();
+return <EchoAccountButton echo={echo} />;
+```
+
+### EchoPopover
+
+The popover container that holds the account interface:
+
+```tsx
+import { EchoPopover } from '@/components/echo-account-button/echo-popover';
+```
+
+### Balance Component
+
+Displays the user's current balance:
+
+```tsx
+import { Balance } from '@/components/echo-account-button/balance';
+```
+
+### TopUpButton
+
+Handles adding funds to the user's account:
+
+```tsx
+import { TopUpButton } from '@/components/echo-account-button/top-up-button';
+```
+
+## Customization
+
+### Styling
+
+You can customize the appearance using Tailwind classes:
+
+```tsx
+<EchoAccount className="custom-account-styles" />
+```
+
+### Custom Props
+
+The component accepts various props for customization:
+
+```tsx
+interface EchoAccountProps {
+  className?: string;
+  showBalance?: boolean;
+  showTopUp?: boolean;
+  variant?: 'default' | 'compact' | 'minimal';
+}
+```
+
+### Example with Custom Props
+
+```tsx
+<EchoAccount 
+  className="my-custom-styles"
+  showBalance={true}
+  showTopUp={true}
+  variant="compact"
+/>
+```
+
+## Advanced Usage
+
+### Custom Account Button
+
+You can create a custom account button with your own styling:
+
+```tsx
+import { EchoAccountButton } from '@/components/echo-account-button/echo-account';
+import { useEcho } from '@merit-systems/echo-react-sdk';
+
+function CustomAccountButton() {
+  const echo = useEcho();
+  
+  return (
+    <EchoAccountButton 
+      echo={echo}
+      className="bg-custom-primary text-white rounded-lg px-4 py-2"
+    />
+  );
+}
+```
+
+### Standalone Components
+
+You can use individual components for custom layouts:
+
+```tsx
+import { Balance } from '@/components/echo-account-button/balance';
+import { TopUpButton } from '@/components/echo-account-button/top-up-button';
+
+function CustomAccountLayout() {
+  return (
+    <div className="flex items-center gap-4">
+      <Balance />
+      <TopUpButton />
+    </div>
+  );
+}
+```
+
+## Integration with Echo SDK
+
+The Echo Account component automatically integrates with the Echo SDK:
+
+### Authentication
+
+* Automatically detects user login status
+* Shows login button when user is not authenticated
+* Displays user information when authenticated
+
+### Balance Management
+
+* Real-time balance updates
+* Currency formatting
+* Balance history (if available)
+
+### Payment Processing
+
+* Integrated top-up functionality
+* Secure payment processing
+* Transaction history
+
+## Responsive Design
+
+The Echo Account component is fully responsive:
+
+* **Desktop**: Full popover with all account details
+* **Tablet**: Optimized layout for touch interfaces
+* **Mobile**: Compact design with essential features
+
+## Accessibility
+
+The component includes comprehensive accessibility features:
+
+* **Keyboard navigation** - Full keyboard support
+* **Screen reader support** - Proper ARIA labels and descriptions
+* **Focus management** - Proper focus handling for popovers
+* **Color contrast** - Meets WCAG guidelines
+
+## Best Practices
+
+### Performance
+
+* The component uses React.memo for optimal re-rendering
+* Balance updates are debounced to prevent excessive API calls
+* Lazy loading for non-critical components
+
+### Security
+
+* All user data is handled securely through the Echo SDK
+* No sensitive information is stored in component state
+* Proper error handling for failed operations
+
+### User Experience
+
+* Clear visual feedback for all user actions
+* Loading states for async operations
+* Error states with helpful messages
+
+## Troubleshooting
+
+### Common Issues
+
+**Component not rendering:**
+
+* Ensure Echo provider is properly configured
+* Check that user is authenticated
+* Verify all required dependencies are installed
+
+**Balance not updating:**
+
+* Check Echo SDK configuration
+* Verify API endpoints are accessible
+* Check browser console for errors
+
+**Styling issues:**
+
+* Ensure Tailwind CSS is properly configured
+* Check that component CSS is loaded
+* Verify custom styles don't conflict
+
+### Debug Mode
+
+Enable debug mode to see detailed logging:
+
+```tsx
+<EchoAccount debug={true} />
+```
+
+This will log component state changes and API calls to the browser console.
+
+
+# Echo Components
+URL: /docs/components
+
+***
+
+title: Echo Components
+description: Pre-built UI components for Echo applications
+----------------------------------------------------------
+
+# Echo Components
+
+Echo provides a comprehensive set of pre-built UI components through our [Shadcn Components Registry](https://echo-components.com/). These components are specifically designed for Echo applications and include everything you need to build beautiful, functional user interfaces.
+
+## What are Echo Components?
+
+Echo Components are pre-built React components that integrate seamlessly with the Echo ecosystem. They provide:
+
+* **Ready-to-use UI elements** - Drop-in components for common Echo app patterns
+* **Echo integration** - Built-in support for Echo authentication, billing, and user management
+* **Consistent design** - Unified design system across all Echo applications
+* **Accessibility** - WCAG compliant components out of the box
+* **Customization** - Easy theming and styling options
+
+## Available Components
+
+### Echo Account Components
+
+* **Echo Account Button** - Complete user account management with balance display, top-up functionality, and user profile
+* **Echo Account (React)** - React-specific implementation with hooks integration
+* **Echo Account (Next.js)** - Next.js optimized version with server-side rendering support
+
+### UI Components
+
+* **Echo Button** - Enhanced button component with Echo-specific variants
+* **Money Input** - Specialized input for handling monetary values with proper formatting
+* **Echo Logo** - Branded logo component with light/dark mode support
+
+## Quick Start
+
+To get started with Echo Components, you can install them using the Shadcn CLI:
+
+```bash
+# Install Echo Account component for React
+pnpm dlx shadcn@latest add https://echo-components.com/r/echo-account-react.json
+
+# Install Echo Account component for Next.js
+pnpm dlx shadcn@latest add https://echo-components.com/r/echo-account-next.json
+```
+
+## When to Use Echo Components
+
+Use Echo Components when you want to:
+
+* **Speed up development** - Skip building common UI patterns from scratch
+* **Ensure consistency** - Maintain design consistency across Echo applications
+* **Focus on business logic** - Spend time on your app's unique features instead of UI
+* **Leverage Echo integration** - Get built-in support for Echo's authentication and billing systems
+
+## Next Steps
+
+* **[Installation Guide](/docs/components/installation)** - Learn how to set up Echo Components in your project
+* **[Echo Account Component](/docs/components/echo-account)** - Complete guide to the Echo Account component
+* **[UI Components](/docs/components/ui-components)** - Overview of available UI components
+* **[Customization](/docs/components/customization)** - How to customize and theme Echo Components
+
+
+# Installation
+URL: /docs/components/installation
+
+***
+
+title: Installation
+description: How to install and set up Echo Components
+------------------------------------------------------
+
+# Installation
+
+This guide will walk you through installing Echo Components in your project using the Shadcn CLI.
+
+## Prerequisites
+
+Before installing Echo Components, make sure you have:
+
+* A React or Next.js project
+* [Shadcn CLI](https://ui.shadcn.com/docs/installation) installed
+* Echo SDK already set up in your project
+
+## Installing Components
+
+### Using Shadcn CLI
+
+Echo Components are distributed through our custom registry at [echo-components.com](https://echo-components.com/). You can install them using the Shadcn CLI:
+
+```bash
+# Install Echo Account component for React
+pnpm dlx shadcn@latest add https://echo-components.com/r/echo-account-react.json
+
+# Install Echo Account component for Next.js
+pnpm dlx shadcn@latest add https://echo-components.com/r/echo-account-next.json
+```
+
+### Manual Installation
+
+If you prefer to install components manually, you can:
+
+1. Visit [echo-components.com](https://echo-components.com/)
+2. Browse the available components
+3. Copy the component code directly into your project
+4. Install any required dependencies
+
+## Dependencies
+
+Echo Components require several dependencies that will be automatically installed:
+
+### Required Dependencies
+
+* `@radix-ui/react-popover` - For popover functionality
+* `@radix-ui/react-skeleton` - For loading states
+* `@radix-ui/react-avatar` - For user avatars
+* `@radix-ui/react-tooltip` - For tooltips
+* `autonumeric` - For money input formatting
+
+### Echo SDK Dependencies
+
+Make sure you have the appropriate Echo SDK installed:
+
+```bash
+# For React projects
+npm install @merit-systems/echo-react-sdk
+
+# For Next.js projects
+npm install @merit-systems/echo-next-sdk
+```
+
+## Project Setup
+
+### 1. Configure Shadcn
+
+If you haven't already, initialize Shadcn in your project:
+
+```bash
+npx shadcn@latest init
+```
+
+### 2. Install Base Dependencies
+
+Echo Components build on top of Shadcn's base components. Make sure you have the required base components:
+
+```bash
+# Install required base components
+npx shadcn@latest add popover
+npx shadcn@latest add skeleton
+npx shadcn@latest add avatar
+npx shadcn@latest add input
+npx shadcn@latest add tooltip
+```
+
+### 3. Set Up Echo Provider
+
+Make sure your Echo provider is properly configured in your app:
+
+```tsx
+// For React apps
+import { EchoProvider } from '@merit-systems/echo-react-sdk';
+
+function App() {
+  return (
+    <EchoProvider>
+      {/* Your app content */}
+    </EchoProvider>
+  );
+}
+```
+
+```tsx
+// For Next.js apps
+import { EchoProvider } from '@merit-systems/echo-next-sdk';
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <EchoProvider>
+          {children}
+        </EchoProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+## Verification
+
+After installation, you can verify that Echo Components are working by adding a simple Echo Account component to your app:
+
+```tsx
+import { EchoAccount } from '@/components/echo-account-react';
+
+export default function MyApp() {
+  return (
+    <div>
+      <h1>My Echo App</h1>
+      <EchoAccount />
+    </div>
+  );
+}
+```
+
+If the component renders without errors and shows the Echo account interface, your installation is successful!
+
+## Troubleshooting
+
+### Common Issues
+
+**Component not found errors:**
+
+* Make sure you've installed the Echo SDK
+* Verify that the Echo provider is wrapping your app
+* Check that all required base components are installed
+
+**Styling issues:**
+
+* Ensure Tailwind CSS is properly configured
+* Check that your `tailwind.config.js` includes the component paths
+* Verify that CSS variables for theming are set up
+
+**TypeScript errors:**
+
+* Make sure TypeScript is configured to resolve the component paths
+* Check that all type definitions are properly imported
+
+### Getting Help
+
+If you encounter issues:
+
+1. Check the [Echo Components Registry](https://echo-components.com/) for the latest component versions
+2. Review the [Shadcn documentation](https://ui.shadcn.com/docs) for base component setup
+3. Join our [Discord community](https://discord.gg/merit) for support
+
+
+# UI Components
+URL: /docs/components/ui-components
+
+***
+
+title: UI Components
+description: Available UI components in the Echo Components registry
+--------------------------------------------------------------------
+
+# UI Components
+
+Echo Components includes a comprehensive set of UI components designed specifically for Echo applications. These components provide consistent design patterns and integrate seamlessly with the Echo ecosystem.
+
+## Available Components
+
+### Echo Button
+
+Enhanced button component with Echo-specific variants and styling.
+
+```tsx
+import { Button } from '@/components/echo-button';
+
+// Basic usage
+<Button>Click me</Button>
+
+// With variants
+<Button variant="turbo">Turbo Button</Button>
+<Button variant="primaryOutline">Outline Button</Button>
+```
+
+#### Variants
+
+* `default` - Standard button styling
+* `destructive` - For dangerous actions
+* `outline` - Outlined button
+* `primaryOutline` - Primary color outline
+* `destructiveOutline` - Destructive outline
+* `secondary` - Secondary styling
+* `ghost` - Minimal styling
+* `primaryGhost` - Primary ghost variant
+* `link` - Link-style button
+* `success` - Success state styling
+* `turbo` - Special gradient styling
+* `turboSecondary` - Secondary turbo variant
+* `unstyled` - No default styling
+
+#### Sizes
+
+* `default` - Standard size
+* `xs` - Extra small
+* `sm` - Small
+* `lg` - Large
+* `icon` - Icon button size
+* `navbar` - Navbar-specific sizing
+
+### Money Input
+
+Specialized input component for handling monetary values with proper formatting and validation.
+
+```tsx
+import { MoneyInput } from '@/components/money-input';
+import { useState } from 'react';
+
+function PaymentForm() {
+  const [amount, setAmount] = useState(0);
+  
+  return (
+    <MoneyInput
+      setAmount={setAmount}
+      placeholder="Enter amount"
+      initialAmount={0}
+    />
+  );
+}
+```
+
+#### Features
+
+* **Auto-formatting** - Automatic number formatting with commas
+* **Currency symbols** - Built-in dollar sign display
+* **Decimal places** - Configurable decimal precision
+* **Validation** - Built-in min/max value validation
+* **Accessibility** - Full keyboard navigation support
+
+#### Props
+
+```tsx
+interface MoneyInputProps {
+  setAmount: (amount: number) => void;
+  initialAmount?: number;
+  placeholder?: string;
+  prefixClassName?: string;
+  className?: string;
+  inputClassName?: string;
+  hideDollarSign?: boolean;
+  decimalPlaces?: number;
+}
+```
+
+### Echo Logo
+
+Branded logo component with light and dark mode support.
+
+```tsx
+import { EchoLogo } from '@/components/logo';
+
+// Basic usage
+<EchoLogo />
+
+// With custom styling
+<EchoLogo className="w-32 h-8" />
+```
+
+#### Features
+
+* **Theme support** - Automatic light/dark mode switching
+* **Responsive** - Scales appropriately for different screen sizes
+* **Customizable** - Easy to style with Tailwind classes
+
+## Component Registry Structure
+
+The Echo Components registry is organized as follows:
+
+```
+registry/
+├── echo/
+│   ├── blocks/
+│   │   ├── echo-account-button/
+│   │   │   ├── echo-account-react.tsx
+│   │   │   ├── echo-account-next.tsx
+│   │   │   ├── echo-account.tsx
+│   │   │   ├── echo-popover.tsx
+│   │   │   ├── balance.tsx
+│   │   │   └── top-up-button.tsx
+│   │   └── lib/
+│   │       └── currency-utils.ts
+│   └── ui/
+│       ├── echo-button.tsx
+│       ├── money-input.tsx
+│       └── logo.tsx
+└── public/
+    └── logo/
+        ├── light.svg
+        └── dark.svg
+```
+
+## Installation
+
+### Individual Components
+
+You can install individual components using the Shadcn CLI:
+
+```bash
+# Install specific components
+npx shadcn@latest add https://echo-components.com/r/echo-button.json
+npx shadcn@latest add https://echo-components.com/r/money-input.json
+npx shadcn@latest add https://echo-components.com/r/logo.json
+```
+
+### Full Registry
+
+Install the complete Echo Components registry:
+
+```bash
+# Install all Echo components
+npx shadcn@latest add https://echo-components.com/r/echo-account-react.json
+```
+
+## Dependencies
+
+### Required Dependencies
+
+All Echo UI components require these base dependencies:
+
+```json
+{
+  "@radix-ui/react-slot": "^1.0.2",
+  "class-variance-authority": "^0.7.0",
+  "clsx": "^2.0.0",
+  "tailwind-merge": "^2.0.0"
+}
+```
+
+### Component-Specific Dependencies
+
+Some components have additional requirements:
+
+**Money Input:**
+
+```json
+{
+  "autonumeric": "^4.6.0"
+}
+```
+
+**Echo Account:**
+
+```json
+{
+  "@radix-ui/react-popover": "^1.0.7",
+  "@radix-ui/react-skeleton": "^1.0.3",
+  "@radix-ui/react-avatar": "^1.0.4",
+  "@radix-ui/react-tooltip": "^1.0.7"
+}
+```
+
+## Styling and Theming
+
+### CSS Variables
+
+Echo Components use CSS variables for theming:
+
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 47.4% 11.2%;
+  --radius: 0.5rem;
+}
+```
+
+### Custom Themes
+
+You can create custom themes by overriding CSS variables:
+
+```css
+.dark-theme {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  /* ... other variables */
+}
+```
+
+## Best Practices
+
+### Performance
+
+* Use `React.memo` for components that don't need frequent re-renders
+* Implement proper loading states for async operations
+* Use `useCallback` and `useMemo` for expensive computations
+
+### Accessibility
+
+* Always provide proper ARIA labels
+* Ensure keyboard navigation works correctly
+* Test with screen readers
+* Maintain proper color contrast ratios
+
+### Integration
+
+* Use Echo Components consistently across your app
+* Follow the established design patterns
+* Customize components through props rather than modifying source code
+* Keep components up to date with the latest registry versions
+
+## Examples
+
+### Complete Form with Echo Components
+
+```tsx
+import { Button } from '@/components/echo-button';
+import { MoneyInput } from '@/components/money-input';
+import { EchoAccount } from '@/components/echo-account-react';
+import { useState } from 'react';
+
+function PaymentForm() {
+  const [amount, setAmount] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsProcessing(true);
+    // Process payment
+    setIsProcessing(false);
+  };
+
+  return (
+    <div className="space-y-4">
+      <EchoAccount />
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">
+          Payment Amount
+        </label>
+        <MoneyInput
+          setAmount={setAmount}
+          placeholder="Enter amount"
+        />
+      </div>
+      
+      <Button
+        onClick={handleSubmit}
+        disabled={isProcessing || amount <= 0}
+        variant="turbo"
+        className="w-full"
+      >
+        {isProcessing ? 'Processing...' : 'Submit Payment'}
+      </Button>
+    </div>
+  );
+}
+```
+
+### Custom Button Variants
+
+```tsx
+import { Button } from '@/components/echo-button';
+
+function CustomButtons() {
+  return (
+    <div className="space-x-4">
+      <Button variant="default">Default</Button>
+      <Button variant="turbo">Turbo</Button>
+      <Button variant="primaryOutline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Delete</Button>
+    </div>
+  );
+}
+```
+
+
+# Cookbook
+URL: /docs/cookbook
+
+***
+
+title: Cookbook
+description: Echo examples Cookbook.
+------------------------------------
+
+*Coming soon.*
+
+
+# TypeScript CLI
+URL: /docs/getting-started/cli
+
+***
+
+title: TypeScript CLI
+description: Build AI CLI apps with Echo's billing infrastructure
+-----------------------------------------------------------------
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+# TypeScript CLI with Echo
+
+Create CLI tools that generate revenue from AI usage. Echo handles user authentication, billing, and AI provider access through a simple API key flow.
+
+<Steps>
+  <Step>
+    ### Install SDKs
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh
+        npm i @merit-systems/echo-typescript-sdk ai enquirer open
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh
+        yarn add @merit-systems/echo-typescript-sdk ai enquirer open
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh
+        pnpm add @merit-systems/echo-typescript-sdk ai enquirer open
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh
+        bun add @merit-systems/echo-typescript-sdk ai enquirer open
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step>
+    ### Create Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get your `app_id`.
+  </Step>
+
+  <Step>
+    ### Set up authentication
+
+    ```typescript title="cli.ts"
+    import { EchoClient, createEchoOpenAI } from '@merit-systems/echo-typescript-sdk';
+    import { generateText } from 'ai';
+    import enquirer from 'enquirer';
+    import { open } from 'open';
+
+    const APP_ID = 'your-echo-app-id';
+
+    // Get API key from user
+    console.log('Opening Echo to create your API key...');
+    await open(`https://echo.merit.systems/app/${APP_ID}/keys`);
+
+    const { apiKey } = await enquirer.prompt({
+      type: 'input',
+      name: 'apiKey',
+      message: 'Enter your API key:'
+    }) as { apiKey: string };
+    ```
+  </Step>
+
+  <Step>
+    ### Create AI provider
+
+    ```typescript title="cli.ts"
+    // Create Echo client for balance/payments
+    const echo = new EchoClient({ apiKey });
+
+    // Create OpenAI provider with Echo billing
+    const openai = createEchoOpenAI(
+      { appId: APP_ID },
+      async () => apiKey
+    );
+    ```
+  </Step>
+
+  <Step>
+    ### Make AI calls
+
+    ```typescript title="cli.ts"
+    // Generate text with automatic billing
+    const { text } = await generateText({
+      model: openai('gpt-5'),
+      prompt: 'Explain quantum computing in simple terms',
+    });
+
+    console.log(text);
+    ```
+  </Step>
+
+  <Step>
+    ### Add balance checking
+
+    ```typescript title="cli.ts"
+    // Check user's balance
+    const balance = await echo.balance.getBalance();
+    console.log(`Balance: $${balance.balance}`);
+
+    // Create top-up link if needed
+    if (balance.balance < 1) {
+      const payment = await echo.payments.createPaymentLink({
+        amount: 10,
+      });
+
+      console.log('Low balance. Opening payment link...');
+      await open(payment.paymentLink.url);
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Run your CLI
+
+    ```sh
+    npx tsx cli.ts
+    ```
+  </Step>
+
+  <Step>
+    ### Prosper.
+  </Step>
+</Steps>
+
+## Next Steps
+
+For detailed documentation and advanced features, see the [TypeScript SDK overview](/docs/typescript-sdk).
+
+
+# Next.js
+URL: /docs/getting-started/next-js
+
+***
+
+title: Next.js
+description: Use Echo to make monetized AI Next.js apps.
+--------------------------------------------------------
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+# Getting Started with Next.js
+
+<Steps>
+  <Step>
+    ### Install the Echo Next SDK
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh
+        npm i @merit-systems/echo-next-sdk
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh
+        yarn add @merit-systems/echo-next-sdk
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh
+        pnpm add @merit-systems/echo-next-sdk
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh
+        bun add @merit-systems/echo-next-sdk
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step>
+    ### Install Vercel AI SDK
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh
+        npm i ai
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh
+        yarn add ai
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh
+        pnpm add ai
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh
+        bun add ai
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Add Echo configuration file
+
+    <Files>
+      <Folder name="src/echo" defaultOpen>
+        <File name="index.ts" />
+      </Folder>
+    </Files>
+
+    ```typescript title="src/echo/index.ts" lineNumbers
+    import Echo from "@merit-systems/echo-next-sdk";
+
+    export const { handlers, isSignedIn, openai, anthropic } = Echo({
+        appId: "YOUR_ECHO_APP_ID", // from previous step
+    });
+
+    ```
+  </Step>
+
+  <Step>
+    ### Add Echo Routes
+
+    <Files>
+      <Folder name="src/app/api/echo/[...echo]" defaultOpen>
+        <File name="route.ts" />
+      </Folder>
+    </Files>
+
+    ```typescript title="src/app/api/echo/[...echo]/route.ts" lineNumbers
+    import { handlers } from "@/echo";
+    export const { GET, POST } = handlers;
+    ```
+  </Step>
+
+  <Step>
+    ### Sign In From Client
+
+    Create an action in the front-end that redirects users to authorize your application with [echo.merit.systems](echo.merit.systems).
+
+    ```tsx title="app/page.tsx" lineNumbers
+    import { signIn, isSignedIn } from "@merit-systems/echo-next-sdk/client";
+
+    export default Home() {
+        if (!isSignedIn()) {
+            return <button onClick={() => signIn()}>Sign In</button>
+        }
+        return (
+            <div>
+                <p>Monetization Activated 📈</p> 
+            </div>
+        )
+    }
+    ```
+
+    Sign in will hit the route we setup in [Step 5](#add-echo-routes) and redirect from the server.
+  </Step>
+
+  <Step>
+    ### Use `generateText` / `streamText` from the server
+
+    Echo is a standard [Vercel AI SDK](https://ai-sdk.dev/docs/introduction) provider.
+
+    <Files>
+      <Folder name="app/api/ai" defaultOpen>
+        <File name="route.ts" />
+      </Folder>
+    </Files>
+
+    Add [Vercel AI SDK server routes](https://ai-sdk.dev/docs/ai-sdk-ui/completion) with Echo providers.
+
+    ```typescript title="app/api/completion/route.ts" lineNumbers
+    // [!code ++:1]
+    import { openai } from "@/echo";
+    import { convertToModelMessages, streamText } from "ai";
+
+    export async function POST(req: Request) {
+        const { messages } = await req.json();
+
+        const result = streamText({
+            model: openai("gpt-5"), 
+            messages: convertToModelMessages(messages),
+        });
+
+        return result.toUIMessageStreamResponse();
+    }
+
+    ```
+  </Step>
+
+  <Step>
+    ### `useChat()` from the client
+
+    ```tsx title="app/components/chat.tsx" lineNumbers
+    "use client";
+
+    import { useChat } from "@ai-sdk/react";
+    import { useState } from "react";
+
+    export default function Chat() {
+        const [input, setInput] = useState("");
+        const { messages, sendMessage } = useChat();
+        return (
+            <div>
+    			{messages.map((message) => (
+    				<div>{JSON.stringify(message)}</div>
+    			))}
+    			<input value={input} onChange={(e) => setInput(e.currentTarget.value)} />
+    			<button type="submit" onClick={() => sendMessage({ text: input })}>Send</button>
+            </div>
+        );
+    }
+
+    ```
+
+    Then add use it on the authenticated page.
+
+    ```tsx title="app/page.tsx" lineNumbers
+    // [!code ++:1]
+    import Chat from "./components/chat";
+    import { signIn, isSignedIn } from "@merit-systems/echo-next-sdk/client";
+
+
+    export default Home() {
+        if (!isSignedIn()) {
+            return <button onClick={() => signIn()}>Sign In</button>
+        }
+        // [!code ++:1]
+        return <Chat />;
+        // [!code --:3]
+        return (
+            <div> Monetization Activated 📈</div>
+        )
+        
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Prosper
+  </Step>
+</Steps>
+
+## Next Steps
+
+For detailed documentation and advanced features, see the [Next.js SDK overview](/docs/next-sdk).
+
+
+# React
+URL: /docs/getting-started/react
+
+***
+
+title: React
+description: Integrate Echo into your React application
+-------------------------------------------------------
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+# Getting Started with Echo in React
+
+<Steps>
+  <Step>
+    ### Create a React app using Vite
+
+    Run the following commands to create a new React app using Vite.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npm create vite@latest echo-react -- --template react-ts
+        cd echo-react
+        npm install
+        npm run dev
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn create vite echo-react --template react-ts
+        cd echo-react
+        yarn install
+        yarn dev
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpm create vite echo-react --template react-ts
+        cd echo-react
+        pnpm install
+        pnpm dev
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bun create vite echo-react --template react-ts
+        cd echo-react
+        bun install
+        bun dev
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step>
+    ### Install `@merit-systems/echo-react-sdk` and `ai`
+
+    The Echo React SDK gives you access to prebuilt components, hooks and helpers to make LLM billing and calling easier.
+
+    The [Vercel AI SDK](https://ai-sdk.dev/docs/introduction) is the standard SDK for interacting with AI in Typescript.
+
+    Run the following commands to install the dependencies.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npm i @merit-systems/echo-react-sdk ai
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn add @merit-systems/echo-react-sdk ai
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpm add @merit-systems/echo-react-sdk ai
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bun add @merit-systems/echo-react-sdk ai
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step>
+    ### Setup your Echo App
+
+    1. In the Echo dashboard navigate to [**Create App**](https://echo.merit.systems/new).
+    2. Copy your `app_id` and paste it into your `.env` file.
+
+    The final result should resemble the following:
+
+    ```sh title=".env" lineNumbers
+    VITE_ECHO_APP_ID=b30f0f78-4000-8000-000000000000
+    ```
+  </Step>
+
+  <Step>
+    ### Import your Echo App ID
+
+    In your `main.tsx` file, import your app id.
+    Include your App ID from the prior step.
+
+    ```tsx title="main.tsx" lineNumbers
+    import { StrictMode } from 'react'
+    import { createRoot } from 'react-dom/client'
+    import './index.css'
+    import App from './App.tsx'
+
+    // [!code ++:1]
+    const APP_ID = import.meta.env.VITE_ECHO_APP_ID;
+
+    // [!code ++:3]
+    if (!APP_ID) {
+        throw new Error('Add your Echo App ID to .env');
+    }
+
+    createRoot(document.getElementById('root')!).render(
+        <StrictMode>
+            <App />
+        </StrictMode>,
+    )
+    ```
+  </Step>
+
+  <Step>
+    ### `<EchoProvider>` component
+
+    The `<EchoProvider>` component provides session and user context to Echo's hooks and components. It's recommended to wrap
+    your entire app at the entry point with `<EchoProvider>` to make Echo globally available.
+
+    Pass your Echo App ID as a prop to `<EchoProvider>`.
+
+    ```tsx title="main.tsx" lineNumbers
+    import { StrictMode } from 'react'
+    import { createRoot } from 'react-dom/client'
+    import './index.css'
+    import App from './App.tsx'
+    // [!code ++:1]
+    import { EchoProvider } from '@merit-systems/echo-react-sdk';
+
+    const APP_ID = import.meta.env.VITE_ECHO_APP_ID;
+
+    if (!APP_ID) {
+        throw new Error('Add your Echo App ID to .env');
+    }
+
+    createRoot(document.getElementById('root')!).render(
+        <StrictMode>
+            // [!code ++:1]
+            <EchoProvider config={{ appId: APP_ID }}>
+                <App />
+            // [!code ++:1]
+            </EchoProvider>
+        </StrictMode>,
+    )
+    ```
+  </Step>
+
+  <Step>
+    ### `<EchoSignIn>` component
+
+    `<EchoSignIn>` is a React component that can be placed anywhere in your app. When a user clicks
+    it will redirect to authenticate with [echo.merit.systems](echo.merit.systems). After authentication,
+    Echo can manage all LLM calls.
+
+    ```tsx title="src/App.tsx" lineNumbers
+    // [!code ++:1]
+    import { EchoSignIn } from '@merit-systems/echo-react-sdk';
+
+    function App() {
+
+        return (
+            <>
+                <header>
+                    // [!code ++:1]
+                    <EchoSignIn />
+                </header>
+                <main>
+                    <h1>AI Coming Soon</h1>
+                </main>
+            </>
+        );
+    }
+
+    export default App;
+    ```
+  </Step>
+
+  <Step>
+    ### `useEcho()` hook
+
+    The `useEcho()` hook surfaces everything you need to show Echo state to your users.
+
+    ```tsx title="src/App.tsx" lineNumbers
+    // [!code ++:1]
+    import { EchoSignIn, useEcho } from '@merit-systems/echo-react-sdk';
+
+    function App() {
+
+    // [!code ++:1]
+    const { isAuthenticated, user, balance, signOut } = useEcho();
+
+    return (
+        <>
+            <header>
+                <EchoSignIn />
+
+            // [!code ++:9]
+            {!isAuthenticated && "Sign in to continue"}
+            {isAuthenticated && (
+                <div>
+                    <p>Welcome, {user?.name}!</p>
+                    <p>Email: {user?.email}</p>
+                    <p>Balance: {balance?.balance}</p>
+                    <button onClick={signOut}>Sign Out</button>
+                </div>
+            )}
+            </header>
+            <main>
+                <h1>AI Coming Soon</h1>
+            </main>
+        </>
+    );
+    }
+
+    export default App;
+    ```
+  </Step>
+
+  <Step>
+    ### `generateText()` from OpenAI
+
+    Create a new component and use the Vercel AI SDK with Echo models.
+
+    ```tsx title="src/App.tsx" lineNumbers
+    import { EchoSignIn, useEcho } from '@merit-systems/echo-react-sdk';
+    // [!code ++:1]
+    import AIComponent from './AIComponent';
+
+    function App() {
+
+    const { isAuthenticated, user, balance, signOut } = useEcho();
+
+    return (
+        <>
+            <header>
+                <EchoSignIn />
+
+                {!isAuthenticated && "Sign in to continue"}
+                {isAuthenticated && (
+                    <div>
+                        <p>Welcome, {user?.name}!</p>
+                        <p>Email: {user?.email}</p>
+                        <p>Balance: {balance?.balance}</p>
+                        <button onClick={signOut}>Sign Out</button>
+                    </div>
+                )}
+            </header>
+            <main>
+                // [!code --:1]
+                <h1>AI Coming Soon</h1>
+                // [!code ++:1]
+                {isAuthenticated && <AIComponent />}
+            </main>
+        </>
+    );
+    }
+
+    export default App;
+    ```
+
+    AI SDK's [`generateText()`](https://ai-sdk.dev/docs/reference/ai-sdk-core/generate-text) is used to generate a single response from the model.
+    `useEchoModelProviders()` routes the requests through Echo.
+
+    ```tsx title="src/AIComponent.tsx" lineNumbers
+    // [!code ++:100]
+    import { useState } from 'react';
+    import { generateText } from 'ai';
+    import { useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+
+    export default function AIComponent() {
+        const [result, setResult] = useState("");
+        const { openai } = useEchoModelProviders();
+
+        const handleGen = async () => {
+            const { text } = await generateText({
+                model: openai('gpt-5-nano'),
+                messages: [
+                    { role: 'user', content: 'Two sentences. What is the cleanest way to make $1M?' }
+                ]
+            });
+            setResult(text);
+        };
+
+
+        return (
+            <div>
+                <button onClick={handleGen}>Generate Wisdom</button>
+                <p>{result}</p>
+            </div>
+
+        );
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Switch to `streamText()`
+
+    The AI SDK [`streamText()`](https://ai-sdk.dev/docs/reference/ai-sdk-core/stream-text) function is used to incrementally show the response from the model.
+
+    ```tsx title="src/AIComponent.tsx" lineNumbers
+    import { useState } from 'react';
+    // [!code --:1]
+    import { generateText } from 'ai';
+    // [!code ++:1]
+    import { streamText } from 'ai';
+    import { useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+
+    export default function AIComponent() {
+        const [result, setResult] = useState("");
+        const { openai } = useEchoModelProviders();
+
+        const handleGen = async () => {
+            // [!code ++:2]
+            setResult("Thinking...");
+            const { text } = await streamText({
+            // [!code --:1]
+            const { text } = await generateText({
+                model: openai('gpt-5-nano'),
+                messages: [
+                    { role: 'user', content: 'Two sentences. What is the cleanest way to make $1M?' }
+                ]
+            });
+
+            // [!code ++:3]
+            for await (const chunk of textStream) {
+                setResult(prev => prev + chunk);
+            }
+        };
+
+
+        return (
+            <div>
+                <button onClick={handleGen}>Generate Wisdom</button>
+                <p>{result}</p>
+            </div>
+
+        );
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Enjoy the fruits of your labor.
+
+    Run your project with the following command.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npm run dev
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dev
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpm dev
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bun dev
+        ```
+      </Tab>
+    </Tabs>
+
+    Visit your app's homepage at [`http://localhost:5173`](http://localhost:5173). Sign in and click "Generate Wisdom".
+  </Step>
+</Steps>
+
+## Next Steps
+
+For detailed documentation and advanced features, see the [React SDK overview](/docs/react-sdk).
+
+
+# Templates
+URL: /docs/getting-started/templates
+
+***
+
+title: Templates
+description: Get started quickly with Echo using pre-built templates
+--------------------------------------------------------------------
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+The easiest way to get started with Echo is to use one of our pre-built templates.
+
+## React
+
+The React template is a simple application that uses Vite and `echo-react-sdk`. Uniquely Echo does not require
+a server to make API calls because it handles Oauth directly in the browser.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/react)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a React app using Vite
+
+    Run the following commands to create a new React app using Vite.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template vite --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template vite --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template vite --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template vite --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Next.js
+
+The Next.js template is a full-stack application that uses the Next.js framework with the `echo-next-sdk`.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/next)
+
+<Steps>
+  <Step>
+    ### Create an Echo app
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a Next.js app
+
+    Run the following commands to create a new Next.js app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template next --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template next --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template next --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template next --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Assistant UI
+
+A full-featured chat UI powered by `@assistant-ui/react` integrated with Echo and the Vercel AI SDK v5.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/assistant-ui)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create an Assistant UI app
+
+    Run the following commands to create a new app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template assistant-ui --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template assistant-ui --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template assistant-ui --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template assistant-ui --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Next.js Chat
+
+A complete chat application with beautiful UI components, real-time balance display, and streaming AI responses.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/next-chat)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a Next.js Chat app
+
+    Run the following commands to create a new chat app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template next-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template next-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template next-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template next-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Next.js Image Generation
+
+AI-powered image generation application with gallery view, download capabilities, and automatic cost tracking.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/next-image)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a Next.js Image app
+
+    Run the following commands to create a new image generation app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template next-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template next-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template next-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template next-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Next.js Video Generation
+
+AI-powered video generation application with video preview, playback, and Echo billing integration.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/next-video-template)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a Next.js Video app
+
+    Run the following commands to create a new video generation app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template next-video-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template next-video-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template next-video-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template next-video-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Next.js API Key Template
+
+Server-side API key management with PostgreSQL database, Prisma ORM, and Docker setup for local development.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/nextjs-api-key-template)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a Next.js API Key app
+
+    Run the following commands to create a new API key management app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template nextjs-api-key-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template nextjs-api-key-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template nextjs-api-key-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template nextjs-api-key-template --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## React Chat
+
+Chat interface built for React applications with Vite, Tailwind CSS, and Echo OAuth integration.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/react-chat)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a React Chat app
+
+    Run the following commands to create a new React chat app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template react-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template react-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template react-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template react-chat --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## React Image Generation
+
+Client-side image generation for React applications with Echo billing and image gallery.
+
+[View on GitHub](https://github.com/Merit-Systems/echo/tree/master/templates/react-image)
+
+<Steps>
+  <Step>
+    ### Create an Echo App
+
+    Go to [echo.merit.systems/new](https://echo.merit.systems/new) to get an `app_id`.
+  </Step>
+
+  <Step>
+    ### Create a React Image app
+
+    Run the following commands to create a new React image generation app.
+
+    <Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+      <Tab value="npm">
+        ```sh lineNumbers
+        npx echo-start@latest --template react-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="yarn">
+        ```sh lineNumbers
+        yarn dlx echo-start@latest --template react-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="pnpm">
+        ```sh lineNumbers
+        pnpx echo-start@latest --template react-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+
+      <Tab value="bun">
+        ```sh lineNumbers
+        bunx echo-start@latest --template react-image --app-id YOUR_ECHO_APP_ID
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+
+# Claiming Earnings
+URL: /docs/money/claiming-earnings
+
+***
+
+title: Claiming Earnings
+description: How to receive your payouts from Echo
+--------------------------------------------------
+
+# Claiming Earnings
+
+## Setting Up Payouts
+
+To receive payouts, associate a GitHub user or repository with your app in the [app settings](https://echo.merit.systems/apps).
+
+Once configured, view pending earnings on the [creator earnings page](https://echo.merit.systems/earnings/creator).
+
+## When Do Payouts Happen?
+
+Claims are processed daily via [the Terminal](https://terminal.merit.systems). Funds are sent to the GitHub user or repository configured in your app settings at the time of payout.
+
+**Important:** If no GitHub account is set, the transfer will be skipped that day. You can claim your funds through the Terminal once they're transferred.
+
+For more information, see the [Terminal docs](https://www.merit.systems/docs/terminal).
+
+## Questions?
+
+Join our [Discord](https://discord.gg/merit) if you have questions about claims, payouts, or are experiencing any issues. We're actively looking for feedback on our claims system.
+
+
+# Money
+URL: /docs/money
+
+***
+
+title: Money
+description: Earning revenue with Echo
+--------------------------------------
+
+# Money
+
+Learn how to earn revenue with Echo's markup model and claim your earnings.
+
+## Overview
+
+* **[Markups & Fees](/docs/money/markups-and-fees)** - How Echo's pricing model works
+* **[Claiming Earnings](/docs/money/claiming-earnings)** - How to receive your payouts
+* **[Referrals](/docs/money/referrals)** - Incentivize users to market your app
+
+
+# Markups & Fees
+URL: /docs/money/markups-and-fees
+
+***
+
+title: Markups & Fees
+description: How Echo's pricing model works
+-------------------------------------------
+
+# Markups & Fees
+
+Echo charges **zero fees on costs**—only on your profit margin.
+
+## How Markups Work
+
+Set a markup percentage on your app (e.g., 20%). When users consume tokens, they pay:
+
+* **Base cost** → Goes directly to the provider (OpenAI, Anthropic, etc.)
+* **Your markup** → Your profit, held by Echo until claimed
+
+**Example:** User spends $1.00 on tokens with 20% markup:
+
+* $1.00 → Provider costs (you pay nothing)
+* $0.20 → Your profit (Echo takes 2.5% = $0.005, you keep $0.195)
+
+## Echo's Fee Structure
+
+Echo takes a **2.5% fee on your profit only**—not on the base costs. This means:
+
+* You never pay for provider costs
+* You only share revenue when you make money
+* No monthly fees or minimum charges
+
+## Questions?
+
+Join our [Discord](https://discord.gg/merit) if you have questions about markups, fees, or pricing. We're actively looking for feedback.
+
+
+# Referrals
+URL: /docs/money/referrals
+
+***
+
+title: Referrals
+description: Incentivize users to market your app
+-------------------------------------------------
+
+# Referrals (Beta)
+
+User referrals allow you to incentivize users to market your application. Set a referral percentage (e.g., 5% of profit), and referrers earn that percentage on all profits generated by users they bring in for the lifetime of those users.
+
+## How It Works
+
+1. Enable referrals on your app with a percentage rate (e.g., 5%)
+2. Users generate referral links to share your app
+3. When someone signs up via a referral link, the referrer earns your set percentage on all profits from that user
+4. Referral earnings are tracked and paid out alongside your regular earnings
+
+## Example
+
+With a 5% referral rate, if a referred user generates $100 in profit for your app, the referrer earns $5.
+
+## Beta Status
+
+This feature is in early beta and may not work as expected. Reach out in [Discord](https://discord.gg/merit) if you're interested in setting up referrals for your application.
+
+## Questions?
+
+Join our [Discord](https://discord.gg/merit) if you have questions about referrals or want to participate in the beta. We're actively looking for feedback.
+
+
+# Client
+URL: /docs/next-sdk/client
+
+***
+
+title: Client
+description: Echo's Next.js SDK client-side functionality.
+----------------------------------------------------------
+
+Echo maintains authentication using HTTP Cookies. The browser does not have access
+to these so login state needs to be handled by server components.
+
+# Setup Provider
+
+Create a `providers.tsx` file to wrap your app with the Echo provider:
+
+```typescript
+"use client";
+
+import { EchoProvider } from '@merit-systems/echo-next-sdk/client';
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <EchoProvider config={{ appId: 'your-app-id' }}>
+      {children}
+    </EchoProvider>
+  );
+}
+```
+
+Then wrap your app in `layout.tsx`:
+
+```typescript
+import { Providers } from './providers';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+```
+
+# Using the useEcho Hook
+
+The `useEcho` hook provides access to user data, balance information, and authentication methods:
+
+```typescript
+import { useEcho } from '@merit-systems/echo-next-sdk/client';
+
+export default function MyComponent() {
+  const { user, balance, freeTierBalance, signIn, signOut, echoClient } = useEcho();
+
+  if (!user) {
+    return <button onClick={signIn}>Sign In</button>;
+  }
+
+  return (
+    <div>
+      <p>Welcome {user.name}!</p>
+      <p>Balance: ${balance?.balance || 0}</p>
+      <button onClick={signOut}>Sign Out</button>
+    </div>
+  );
+}
+```
+
+# Direct API Access with echoClient
+
+For more advanced use cases, you can access the `echoClient` directly to call any Echo API method:
+
+```typescript
+import { useEcho } from '@merit-systems/echo-next-sdk/client';
+
+export default function PaymentComponent() {
+  const { echoClient } = useEcho();
+
+  const handleCreatePayment = async () => {
+    if (!echoClient) return;
+
+    try {
+      // Create payment link
+      const paymentLink = await echoClient.payments.createPaymentLink({
+        amount: 10,
+        description: 'Credits',
+      });
+      
+      // Get detailed user info
+      const userInfo = await echoClient.users.getUserInfo();
+      
+      // Check balance
+      const balance = await echoClient.balance.getBalance();
+      
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  return <button onClick={handleCreatePayment}>Create Payment</button>;
+}
+```
+
+The `echoClient` provides full access to all Echo API endpoints. For a complete list of available methods, see the [TypeScript SDK](../typescript-sdk) documentation.
+
+
+# Overview
+URL: /docs/next-sdk
+
+***
+
+title: Overview
+description: Server-side Echo integration for Next.js App Router
+----------------------------------------------------------------
+
+# Next.js SDK
+
+Server-side Echo integration for Next.js App Router with automatic session management.
+
+The Next.js SDK handles OAuth authentication server-side, managing tokens automatically across your API routes and server components. Users authenticate once, and Echo handles billing for all subsequent AI calls.
+
+**Key features:**
+
+* Server-side authentication with automatic token refresh
+* Type-safe API route helpers
+* Seamless integration with Vercel AI SDK
+* Zero client-side API key exposure
+
+## Installation
+
+<Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+  <Tab value="npm">
+    ```bash
+    npm install @merit-systems/echo-next-sdk ai
+    ```
+  </Tab>
+
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @merit-systems/echo-next-sdk ai
+    ```
+  </Tab>
+
+  <Tab value="yarn">
+    ```bash
+    yarn add @merit-systems/echo-next-sdk ai
+    ```
+  </Tab>
+
+  <Tab value="bun">
+    ```bash
+    bun add @merit-systems/echo-next-sdk ai
+    ```
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+Set up Echo in your Next.js app:
+
+```typescript title="src/echo/index.ts"
+import Echo from "@merit-systems/echo-next-sdk";
+
+export const { handlers, isSignedIn, openai, anthropic } = Echo({
+  appId: "your-echo-app-id",
+});
+```
+
+Create the API route:
+
+```typescript title="src/app/api/echo/[...echo]/route.ts"
+import { handlers } from "@/echo";
+export const { GET, POST } = handlers;
+```
+
+Use in your app:
+
+```tsx title="app/page.tsx"
+import { signIn, isSignedIn } from "@merit-systems/echo-next-sdk/client";
+
+export default function Home() {
+  if (!isSignedIn()) {
+    return <button onClick={() => signIn()}>Sign In</button>;
+  }
+  return <div>Ready to build!</div>;
+}
+```
+
+## Documentation Sections
+
+* **[Server](./next-sdk/server)** - Server-side authentication and API routes
+* **[Client](./next-sdk/client)** - Client-side utilities for Echo authentication
+
+For a complete walkthrough, see the [Next.js quickstart guide](/docs/getting-started/next-js).
+
+
+# Server
+URL: /docs/next-sdk/server
+
+***
+
+title: Server
+description: Echo's Next.js SDK server-side functionality.
+----------------------------------------------------------
+
+Echo's Next.js SDK will handle all authentication logic out of the box.
+
+Configure Echo with the Echo constructor.
+
+```typescript title="src/echo/index.ts"
+import Echo from '@merit-systems/echo-next-sdk';
+
+export const {
+  // Echo Auth Routes
+  handlers,
+
+  // Server-side utils
+  getUser,
+  isSignedIn,
+
+  // AI Providers
+  openai,
+  anthropic,
+  google,
+} = Echo({
+  appId: 'ECHO_APP_ID',
+});
+```
+
+By re-exporting the Echo constructor results, you can use throughout your server logic.
+
+The `Echo` constructor takes the following configuration params.
+
+<AutoTypeTable path="../../sdk/next/src/types.ts" name="EchoConfig" />
+
+## Handlers
+
+```typescript
+import handlers from '@/echo';
+
+export { GET, POST } = handlers;
+```
+
+Exporting these routes will expose default authentication routes which can be used from the client. In most cases your code will not need to touch these routes.
+
+* `api/echo/signin`
+* `api/echo/callback`
+* `api/echo/refresh`
+
+**Very important** - When productionizing your application, you will need to append `/api/echo/callback` to your app's homepage route when inputting the correct authorized
+callback Url.
+
+## Server Utilities
+
+```typescript
+import { getUser, isSignedIn } from "@/echo";
+
+export default async function Page() {
+    const signedIn = await isSignedIn();
+
+    if (!signedIn) {
+        return <SignIn />;
+    } else {
+        const user = await getUser();
+        return <Dashboard user={user} />;
+    }
+}
+
+```
+
+## AI Providers
+
+Echo's Next.js SDK provides a thin wrapper around the Vercel AI SDK.
+Echo follows their [recommended pattern](https://ai-sdk.dev/docs/getting-started/nextjs-app-router#create-a-route-handler) with a small diff, to route through Echo
+instead of the model provider.
+
+```typescript
+// [!code --:1]
+import { openai } from '@ai-sdk/openai';
+// [!code ++:1]
+import { openai } from '@/echo';
+import { streamText, UIMessage, convertToModelMessages } from 'ai';
+
+// Allow streaming responses up to 30 seconds
+export const maxDuration = 30;
+
+export async function POST(req: Request) {
+  const { messages }: { messages: UIMessage[] } = await req.json();
+
+  const result = streamText({
+    model: openai('gpt-5'),
+    messages: convertToModelMessages(messages),
+  });
+
+  return result.toUIMessageStreamResponse();
+}
+```
+
+
+# Anthropic Provider
+URL: /docs/providers/anthropic
+
+***
+
+title: Anthropic Provider
+description: Claude models with Echo billing integration
+--------------------------------------------------------
+
+# Anthropic Provider
+
+The Anthropic provider gives you access to Claude models through the Vercel AI SDK with automatic Echo billing integration.
+
+## Supported Models
+
+All Anthropic models are supported via the `AnthropicModel` type:
+
+<ModelTable path="../sdk/ts/src/supported-models/chat/anthropic.ts" />
+
+
+# Gemini Provider
+URL: /docs/providers/gemini
+
+***
+
+title: Gemini Provider
+description: Google Gemini models with Echo billing integration
+---------------------------------------------------------------
+
+# Gemini Provider
+
+The Gemini provider gives you access to Google's Gemini models through the Vercel AI SDK with automatic Echo billing integration.
+
+## Supported Models
+
+All Gemini models are supported via the `GeminiModel` type:
+
+<ModelTable path="../sdk/ts/src/supported-models/chat/gemini.ts" />
+
+## ⚠️ Gemini Limitations
+
+**Important:** Gemini is currently only supported via the `/chat/completions` endpoint. This means:
+
+* Direct Gemini API streaming may not work as expected
+* For the most reliable streaming experience, ensure your implementation uses the chat completions interface
+* To enable this, you should use the OpenAI Provider, which will hit Gemini's supported chat/completions endpoint.
+* For more information, see Google's documentation [here](https://cloud.google.com/vertex-ai/generative-ai/docs/samples/generativeaionvertexai-gemini-chat-completions-non-streaming).
+* Streaming will be supported through the Vercel interface for Gemini as soon as possible.
+
+```typescript
+const result = streamText({
+  model: openai.chat('gemini-2.0-flash'),
+  messages: convertToModelMessages(messages),
+});
+
+return result.toUIMessageStreamResponse();
+```
+
+To instantiate `openai.chat` in this example, see the following guides:
+
+For React applications, see [React SDK LLM Integration](/docs/react-sdk/llm-integration)
+
+For server-side usage, see [Next.js SDK LLM Integration](/docs/next-sdk/llm-integration)
+
+
+# Providers
+URL: /docs/providers
+
+***
+
+title: Providers
+description: AI model providers supported by Echo
+-------------------------------------------------
+
+# AI Providers
+
+Echo supports 100+ models from leading AI providers through the Vercel AI SDK interface.
+
+## Supported Providers
+
+* **[OpenAI](/docs/providers/openai)** - GPT models, image generation with GPT-image-1
+* **[Anthropic](/docs/providers/anthropic)** - Claude models (all versions)
+* **[Google Gemini](/docs/providers/gemini)** - Gemini models
+
+All providers work identically through Echo's unified interface—just swap the provider name in your code.
+
+## Usage Pattern
+
+```typescript
+import { useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+
+const { openai, anthropic, google } = useEchoModelProviders();
+
+// Same interface, different providers
+const openaiResult = await generateText({ model: openai('gpt-5'), ... });
+const claudeResult = await generateText({ model: anthropic('claude-opus-4'), ... });
+const geminiResult = await generateText({ model: google('gemini-2.0-flash-exp'), ... });
+```
+
+## Framework-Specific Setup
+
+For detailed integration guides, see:
+
+* [React SDK](/docs/react-sdk/llm-integration) - Client-side LLM calls
+* [Next.js SDK](/docs/next-sdk/llm-integration) - Server-side integration
+* [TypeScript SDK](/docs/typescript-sdk) - Direct API access
+
+
+# OpenAI Provider
+URL: /docs/providers/openai
+
+***
+
+title: OpenAI Provider
+description: GPT models with Echo billing integration
+-----------------------------------------------------
+
+# OpenAI Provider
+
+The OpenAI provider gives you access to GPT models through the Vercel AI SDK with automatic Echo billing integration.
+
+## Supported Models
+
+All OpenAI models are supported via the `OpenAIModel` type:
+
+<ModelTable path="../sdk/ts/src/supported-models/chat/openai.ts" />
+
+## Additional Features
+
+### Responses API Support
+
+The OpenAI Responses API is fully supported through Echo's OpenAI provider.
+
+```typescript
+const result = streamText({
+  model: openai.responses('gpt-5'),
+  messages: convertToModelMessages(messages),
+});
+```
+
+### Image Generation with GPT-image-1
+
+Echo also supports OpenAI's image generation capabilities through the GPT-image-1 model:
+
+```typescript
+const result = await generateImage({
+  model: openai.image('gpt-image-1'),
+  prompt,
+});
+```
+
+To instantiate `openai.responses` in these examples, see the following guides:
+
+For React applications, see [React SDK LLM Integration](/docs/react-sdk/llm-integration)
+
+For server-side usage, see [Next.js SDK LLM Integration](/docs/next-sdk/llm-integration)
+
+
+# Components
+URL: /docs/react-sdk/components
+
+***
+
+title: Components
+description: Pre-built UI components for authentication and payments
+--------------------------------------------------------------------
+
+# Components
+
+<Callout type="info">
+  **Recommended Approach**: For most applications, use `<EchoTokens />` as your
+  primary component. It handles the complete user lifecycle including
+  authentication, balance display, token purchases, and sign-out functionality
+  in a single, polished interface.
+</Callout>
+
+## EchoTokens
+
+The `<EchoTokens />` button component handles authentication, balance display, token purchases, and sign-out in one component.
+
+```tsx
+import { EchoTokens } from '@merit-systems/echo-react-sdk';
+
+// Complete user management - handles everything
+<EchoTokens
+  showAvatar={true} // Show user's profile picture
+  onPurchaseComplete={balance => console.log('New balance:', balance)}
+  onError={error => console.error('Error:', error)}
+/>;
+```
+
+### What EchoTokens Handles
+
+* **Authentication**: Shows sign-in button when user is not authenticated
+* **Balance Display**: Shows user's available credits (free tier + paid)
+* **Token Purchases**: Modal with purchase options and Stripe integration
+* **Sign Out**: Built-in sign-out button in the purchase modal
+* **Avatar Support**: Optional user profile picture display
+* **Error Handling**: Comprehensive error states and messaging
+
+### Usage Patterns
+
+```tsx
+// Basic usage - handles everything automatically
+<EchoTokens />
+
+// With avatar and custom purchase amount
+<EchoTokens
+  showAvatar={true}
+  amount={25} // Default purchase amount
+/>
+
+// Custom styling and callbacks
+<EchoTokens
+  className="my-tokens-button"
+  showAvatar={true}
+  onPurchaseComplete={(balance) => {
+    console.log('Purchase successful!', balance);
+    // Refresh your app state, show success message, etc.
+  }}
+  onError={(error) => {
+    console.error('Operation failed:', error);
+    // Handle errors, show user feedback, etc.
+  }}
+/>
+
+// Custom button wrapper
+<EchoTokens onPurchaseComplete={handlePurchase}>
+  <button className="my-custom-credits-button">
+    💎 Manage Credits
+  </button>
+</EchoTokens>
+```
+
+### Props
+
+```typescript
+import type { EchoTokensProps } from '@merit-systems/echo-react-sdk';
+```
+
+#### EchoTokensProps
+
+<AutoTypeTable path="../../sdk/react/src/types/index.ts" name="EchoTokensProps" />
+
+***
+
+## Individual Components
+
+<Callout type="warn">
+  **Most apps should use `<EchoTokens />` instead** - The individual components
+  below are provided for advanced use cases where you need granular control.
+  EchoTokens handles the complete user flow automatically.
+</Callout>
+
+### EchoSignIn
+
+Drop-in component for user authentication with customizable styling and callbacks.
+
+```tsx
+import { EchoSignIn } from '@merit-systems/echo-react-sdk';
+
+// Default styled button
+<EchoSignIn
+  onSuccess={(user) => console.log('Signed in:', user)}
+  onError={(error) => console.error('Sign in failed:', error)}
+/>
+
+// Custom children (renders as clickable wrapper)
+<EchoSignIn onSuccess={handleSuccess}>
+  <button className="my-custom-button">
+    Sign in with Echo
+  </button>
+</EchoSignIn>
+```
+
+<Callout type="info">
+  **Consider using `<EchoTokens />` instead** - It includes sign-in
+  functionality plus balance management and token purchases in a single
+  component.
+</Callout>
+
+#### Props
+
+```typescript
+import type { EchoSignInProps } from '@merit-systems/echo-react-sdk';
+```
+
+<AutoTypeTable path="../../sdk/react/src/types/index.ts" name="EchoSignInProps" />
+
+### EchoSignOut
+
+Component for user sign-out with customizable styling and callbacks.
+
+```tsx
+import { EchoSignOut } from '@merit-systems/echo-react-sdk';
+
+// Default styled button
+<EchoSignOut
+  onSuccess={() => console.log('Signed out successfully')}
+  onError={(error) => console.error('Sign out failed:', error)}
+/>
+
+// Custom children (renders as clickable wrapper)
+<EchoSignOut onSuccess={handleSignOut}>
+  <button className="my-custom-signout-button">
+    🚪 Sign Out
+  </button>
+</EchoSignOut>
+```
+
+<Callout type="info">
+  **Consider using `<EchoTokens />` instead** - It includes a sign-out button in
+  the credits modal, providing a complete user management experience.
+</Callout>
+
+#### Props
+
+```typescript
+import type { EchoSignOutProps } from '@merit-systems/echo-react-sdk';
+```
+
+<AutoTypeTable path="../../sdk/react/src/types/index.ts" name="EchoSignOutProps" />
+
+### Logo
+
+Echo logo component with customizable variants.
+
+```tsx
+import { Logo } from '@merit-systems/echo-react-sdk';
+
+<Logo
+  width={24}
+  height={24}
+  variant="light" // or "dark"
+/>;
+```
+
+
+# Hooks
+URL: /docs/react-sdk/hooks
+
+***
+
+title: Hooks
+description: Core hooks for authentication, model providers, and platform integration
+-------------------------------------------------------------------------------------
+
+# Hooks
+
+## useEcho
+
+Primary hook for accessing authentication state, user information, and core functionality.
+
+```tsx
+import { useEcho } from '@merit-systems/echo-react-sdk';
+
+function AuthComponent() {
+  const {
+    user,
+    isAuthenticated,
+    isLoading,
+    error,
+    signIn,
+    signOut,
+    token,
+    getToken,
+  } = useEcho();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <button onClick={signIn}>Sign In</button>;
+  }
+
+  return (
+    <div>
+      <p>Welcome {user?.name || user?.email}!</p>
+      <button onClick={signOut}>Sign Out</button>
+    </div>
+  );
+}
+```
+
+### EchoContextValue
+
+The context value provided by EchoProvider, accessible via `useEcho()`.
+
+```typescript
+import type { EchoContextValue } from '@merit-systems/echo-react-sdk';
+```
+
+#### EchoContextValue
+
+<AutoTypeTable path="../../sdk/react/src/context.ts" name="EchoContextValue" />
+
+### EchoUser
+
+User information from OAuth2 authentication.
+
+```typescript
+import type { EchoUser } from '@merit-systems/echo-react-sdk';
+
+const { user } = useEcho();
+```
+
+#### EchoUser
+
+<AutoTypeTable path="../../sdk/react/src/types/index.ts" name="EchoUser" />
+
+## useEchoClient
+
+Provides access to the Echo TypeScript SDK client for platform operations.
+
+```tsx
+import { useEchoClient } from '@merit-systems/echo-react-sdk';
+
+const echoClient = useEchoClient({
+  apiUrl: 'https://echo.merit.systems',
+});
+
+// Access all TypeScript SDK functionality
+const apps = await echoClient.apps.listEchoApps();
+const balance = await echoClient.balance.getBalance();
+```
+
+`useEchoClient` provides a full [Echo TypeScript SDK](/docs/typescript-sdk) client instance, automatically authenticated using the current user's token.
+
+**Common operations:**
+
+* `echoClient.apps.*` - [App management](/docs/typescript-sdk#clientapps---app-management)
+* `echoClient.balance.*` - [Balance operations](/docs/typescript-sdk#clientbalance---balance-management)
+* `echoClient.payments.*` - [Payment links](/docs/typescript-sdk#clientpayments---payment-management)
+* `echoClient.models.*` - [Model information](/docs/typescript-sdk#clientmodels---model-information)
+* `echoClient.users.*` - [User operations](/docs/typescript-sdk#clientusers---user-management)
+
+## useEchoModelProviders
+
+Access LLM model providers for direct AI integration.
+
+```tsx
+import { useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+import { generateText } from 'ai';
+
+function AIComponent() {
+  const { openai, anthropic } = useEchoModelProviders();
+
+  const handleGenerate = async () => {
+    const { text } = await generateText({
+      model: openai('gpt-5'),
+      prompt: 'Hello world',
+    });
+
+    return text;
+  };
+
+  return <button onClick={handleGenerate}>Generate</button>;
+}
+```
+
+## Balance Management
+
+The `useEcho` hook provides balance management functionality:
+
+```tsx
+const { balance, freeTierBalance, refreshBalance, createPaymentLink } =
+  useEcho();
+```
+
+**balance** - Current account balance
+
+```tsx
+<p>Balance: ${balance?.balance || 0}</p>
+<p>Total Spent: ${balance?.totalSpent || 0}</p>
+```
+
+**freeTierBalance** - Free tier usage information
+
+```tsx
+<p>Free Credits Remaining: ${freeTierBalance?.userSpendInfo.amountLeft || 0}</p>
+```
+
+**refreshBalance()** - Manually refresh balance data
+
+```tsx
+<button onClick={refreshBalance}>Refresh Balance</button>
+```
+
+**createPaymentLink()** - Create Stripe payment links
+
+```tsx
+const paymentUrl = await createPaymentLink(25, 'Credits', '/success');
+window.location.href = paymentUrl;
+```
+
+
+# Image Generation
+URL: /docs/react-sdk/image-generation
+
+***
+
+title: Image Generation
+description: Generate images using DALL-E with Echo's React SDK
+---------------------------------------------------------------
+
+# Image Generation
+
+Generate images directly in the browser using Echo's model providers with the [Vercel AI SDK `generateImage`](https://ai-sdk.dev/docs/reference/ai-sdk-core/generate-image).
+
+```tsx {11,16}
+import { useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+import { experimental_generateImage as generateImage } from 'ai';
+
+function ImageGenerator() {
+  const { openai } = useEchoModelProviders();
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    
+    const result = await generateImage({
+      model: openai.image('dall-e-3'),
+      prompt: 'A futuristic cityscape at sunset',
+      size: '1024x1024',
+    });
+
+    if (result.image) {
+      setImageUrl(`data:image/png;base64,${result.image.base64}`);
+    }
+    
+    setIsGenerating(false);
+  };
+
+  return (
+    <div>
+      <button onClick={handleGenerate} disabled={isGenerating}>
+        {isGenerating ? 'Generating...' : 'Generate Image'}
+      </button>
+      
+      {imageUrl && (
+        <img src={imageUrl} alt="Generated image" className="mt-4 rounded-lg" />
+      )}
+    </div>
+  );
+}
+```
+
+<Callout type="warn">
+  Image generation uses the `experimental_generateImage` function which may change in future Vercel AI SDK versions.
+</Callout>
+
+
+# Overview
+URL: /docs/react-sdk
+
+***
+
+title: Overview
+description: React SDK for direct LLM integration with OAuth2 + PKCE authentication
+-----------------------------------------------------------------------------------
+
+# React SDK
+
+The Echo React SDK enables React applications to call LLMs directly from the browser without API keys or backend servers.
+Most AI SDKs require API keys which must be secured in a server-side environment. Echo does not.
+
+`echo-react-sdk` handles the Oauth and billing complexity, allowing your React client to make direct secure calls to AI resources.
+
+```tsx
+import { useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+import { generateText } from 'ai';
+
+function ChatComponent() {
+  const { openai } = useEchoModelProviders();
+  
+  const handleGenerate = async () => {
+    // Direct AI calls from the browser - no API keys needed!
+    const { text } = await generateText({
+      model: openai('gpt-5-nano'),
+      prompt: 'Hello!'
+    });
+    
+    return text;
+  };
+  
+  return <button type="button" onClick={handleGenerate}>Generate</button>;
+}
+```
+
+## Architecture
+
+The React SDK implements a secure OAuth2 + PKCE flow that eliminates API key management:
+
+1. **User Authentication**: OAuth2 + PKCE flow with your Echo app
+2. **JWT Token Exchange**: Receive short-lived JWTs with LLM access scope
+3. **Direct LLM Calls**: Use tokens directly with OpenAI-compatible endpoints
+4. **Automatic Refresh**: Seamless token renewal in the background
+
+This architecture provides:
+
+* **No API key exposure** - Tokens are scoped to individual users
+* **Security** - Short-lived tokens with automatic refresh
+* **User-scoped billing** - Each user's usage is tracked separately
+* **Direct client calls** - No backend proxy required
+
+## Installation
+
+<Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+  <Tab value="npm">
+    ```bash
+    npm install @merit-systems/echo-react-sdk openai
+    ```
+  </Tab>
+
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @merit-systems/echo-react-sdk openai
+    ```
+  </Tab>
+
+  <Tab value="yarn">
+    ```bash
+    yarn add @merit-systems/echo-react-sdk openai
+    ```
+  </Tab>
+
+  <Tab value="bun">
+    ```bash
+    bun add @merit-systems/echo-react-sdk openai
+    ```
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+Wrap your app with `EchoProvider` and start making direct LLM calls:
+
+```tsx title="App.tsx"
+import { EchoProvider, EchoSignIn, useEcho, useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+import { generateText } from 'ai';
+
+function App() {
+  return (
+    <EchoProvider config={{ 
+      appId: 'your-echo-app-id',
+    }}>
+      <ChatApp />
+    </EchoProvider>
+  );
+}
+
+function ChatApp() {
+  const { isAuthenticated } = useEcho();
+  const { openai } = useEchoModelProviders();
+  
+  if (!isAuthenticated) {
+    return <EchoSignIn />;
+  }
+  
+  const handleGenerate = async () => {
+    const { text } = await generateText({
+      model: openai('gpt-5-nano'),
+      prompt: 'Why did the chicken cross the road?'
+    });
+    
+    console.log(text);
+  };
+  
+  return <button type="button" onClick={handleGenerate}>Ask AI</button>;
+}
+
+export default App;
+```
+
+## Documentation Sections
+
+* **[Provider](/docs/react-sdk/provider)** - EchoProvider setup and configuration
+* **[Components](/docs/react-sdk/components)** - Pre-built UI components for authentication and payments
+* **[Hooks](/docs/react-sdk/hooks)** - Core hooks for authentication, model providers, and platform integration
+* **[LLM Integration](/docs/react-sdk/llm-integration)** - AI SDK integration and direct model access patterns
+* **[Image Generation](/docs/react-sdk/image-generation)** - Generate images using DALL-E with Echo's React SDK
+* **[useChat Hook](/docs/react-sdk/use-chat)** - Advanced chat interfaces with streaming and tool usage
+
+
+# LLM Integration
+URL: /docs/react-sdk/llm-integration
+
+***
+
+title: LLM Integration
+description: AI SDK integration and direct model access patterns
+----------------------------------------------------------------
+
+# LLM Integration
+
+## Vercel AI SDK Integration (Recommended)
+
+The Echo React SDK provides first-class integration with the [Vercel AI SDK](https://ai-sdk.dev/) for the best developer experience.
+
+### `useEchoModelProviders` Hook
+
+Get AI SDK-compatible providers for OpenAI, Anthropic, and Google models for use with [`generateText`](https://ai-sdk.dev/docs/reference/ai-sdk-core/generate-text) or [`streamText`](https://ai-sdk.dev/docs/reference/ai-sdk-core/stream-text).
+
+```tsx title="AIComponent.tsx" lineNumbers
+import { useEchoModelProviders } from '@merit-systems/echo-react-sdk';
+import { generateText, streamText } from 'ai';
+
+function AIComponent() {
+  const { openai, anthropic, google } = useEchoModelProviders();
+  
+  const handleGenerate = async () => {
+    const { text } = await generateText({
+      model: openai('gpt-5'),
+      prompt: 'Write a haiku about coding'
+    });
+    
+    setResult(text);
+  };
+
+  const handleStream = async () => {
+    const { textStream } = await streamText({
+      model: openai('gpt-5'),
+      prompt: 'Write a story about space exploration'
+    });
+    
+    setResult('');
+    for await (const delta of textStream) setResult(prev => prev + delta);
+  };
+  
+  return (
+    <>
+      <button onClick={handleGenerate}>Generate Text</button>
+      <button onClick={handleStream}>Stream Text</button>
+      <div style={{ whiteSpace: 'pre-wrap' }}>{result}</div>
+    </>
+  );
+}
+```
+
+<Callout type="info">
+  **Provider Required**: The `useEchoModelProviders` hook must be used within an [`EchoProvider`](/docs/react-sdk/provider) component.
+</Callout>
+
+## Custom Chat Hook
+
+For advanced chat interfaces, see our [dedicated useChat documentation](/docs/react-sdk/chat).
+
+## Raw Client Access (Advanced)
+
+For lower-level control, you can create raw clients using your Echo JWT.
+
+```tsx
+import { OpenAI } from 'openai';
+
+function RawOpenAIExample() {
+  const { token } = useEcho();
+  
+  // This is what happens under the hood
+  const openai = new OpenAI({
+    apiKey: token, // Your JWT token acts as the API key
+    baseURL: 'https://echo.router.merit.systems', // Echo's proxy endpoint
+    dangerouslyAllowBrowser: true // Safe because token is user-scoped
+  });
+  
+  const handleChat = async () => {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-5',
+      messages: [{ role: 'user', content: 'Hello!' }]
+    });
+    
+    return response.choices[0].message.content;
+  };
+  
+  return <button onClick={handleChat}>Raw Client Call</button>;
+}
+```
+
+
+# Provider
+URL: /docs/react-sdk/provider
+
+***
+
+title: Provider
+description: EchoProvider setup and configuration
+-------------------------------------------------
+
+# Provider
+
+## EchoProvider Setup
+
+The `EchoProvider` component wraps your application and manages OAuth2 + PKCE authentication flow state.
+
+```tsx
+import { EchoProvider } from '@merit-systems/echo-react-sdk';
+
+function App() {
+  return (
+    <EchoProvider
+      config={{
+        appId: 'your-echo-app-id',
+      }}
+    >
+      <YourApp />
+    </EchoProvider>
+  );
+}
+```
+
+### EchoAuthConfig
+
+```typescript
+import type { EchoAuthConfig } from '@merit-systems/echo-react-sdk';
+```
+
+#### EchoAuthConfig
+
+<AutoTypeTable path="../../sdk/react/src/types/index.ts" name="EchoAuthConfig" />
+
+
+# useChat Hook
+URL: /docs/react-sdk/use-chat
+
+***
+
+title: useChat Hook
+description: Build chat interfaces with Echo's useChat hook and streaming AI responses
+--------------------------------------------------------------------------------------
+
+# useChat Hook
+
+Echo provides a `useChat` hook which is a wrapper around the [Vercel AI SDK](https://ai-sdk.dev/docs/reference/ai-sdk-core/use-chat) `useChat` hook and provides niceties for
+creating an Echo-powered chat experience.
+
+```tsx title="App.tsx"
+import {
+  EchoChatProvider,
+  EchoSignIn,
+  useEcho,
+  useEchoModelProviders,
+} from '@merit-systems/echo-react-sdk';
+import { type ModelMessage, streamText } from 'ai';
+import { z } from 'zod';
+import { ChatInterface } from './ChatInterface.tsx';
+
+function App() {
+  const { isAuthenticated } = useEcho();
+  const { openai } = useEchoModelProviders();
+
+  const chatFn = async ({
+    modelMessages,
+    abortSignal,
+  }: {
+    modelMessages: ModelMessage[];
+    abortSignal: AbortSignal | undefined;
+  }) => {
+    const result = streamText({
+      model: openai('gpt-5'),
+      messages: modelMessages,
+      abortSignal,
+      tools: {
+        getWeather: {
+          description: 'Get current weather for a location',
+          inputSchema: z.object({ location: z.string() }),
+          execute: async ({ location }: { location: string }) =>
+            `Weather in ${location}: 72°F and sunny`,
+        },
+      },
+    });
+
+    return result.toUIMessageStream();
+  };
+
+  if (!isAuthenticated) return <EchoSignIn />;
+
+  return (
+    <EchoChatProvider chatFn={chatFn}>
+      <ChatInterface />
+    </EchoChatProvider>
+  );
+}
+
+export default App;
+```
+
+```tsx title="ChatInterface.tsx"
+import { useChat } from '@merit-systems/echo-react-sdk';
+import { useState } from 'react';
+
+export function ChatInterface() {
+  const { messages, sendMessage, status } = useChat();
+  const [input, setInput] = useState('');
+
+  return (
+    <div>
+      <div className="messages">
+        {messages.map(message => (
+          <div key={message.id}>
+            {message.role === 'user' ? 'User: ' : 'AI: '}
+            {message.parts.map((part, index) =>
+              part.type === 'text' ? <span key={index}>{part.text}</span> : null
+            )}
+          </div>
+        ))}
+      </div>
+
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          if (input.trim()) {
+            sendMessage({ text: input });
+            setInput('');
+          }
+        }}
+      >
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          disabled={status !== 'ready'}
+          placeholder="Say something..."
+        />
+        <button type="submit" disabled={status !== 'ready'}>
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+}
+```
+
+## `useChat` Props
+
+<AutoTypeTable path="../../sdk/react/src/components/EchoChatProvider.tsx" name="ChatSendParams" />
+
+
+# Authentication
+URL: /docs/typescript-sdk/authentication
+
+***
+
+title: Authentication
+description: API keys, token providers, and OAuth integration patterns
+----------------------------------------------------------------------
+
+# Authentication
+
+Echo supports multiple authentication methods to fit different use cases, from simple API keys to OAuth2 flows.
+
+## API Key Authentication
+
+### Direct API Key
+
+Simplest method for server-side applications:
+
+```typescript
+import { EchoClient } from '@merit-systems/echo-typescript-sdk';
+
+const echo = new EchoClient({
+  apiKey: 'your-api-key'
+});
+```
+
+### ApiKeyTokenProvider
+
+For more control over token management:
+
+```typescript
+import { EchoClient, ApiKeyTokenProvider } from '@merit-systems/echo-typescript-sdk';
+
+const tokenProvider = new ApiKeyTokenProvider('your-api-key');
+
+const echo = new EchoClient({
+  tokenProvider
+});
+```
+
+## OAuth Token Provider
+
+For dynamic token management (used by React/Next.js SDKs):
+
+```typescript
+import { EchoClient, OAuthTokenProvider } from '@merit-systems/echo-typescript-sdk';
+
+const tokenProvider = new OAuthTokenProvider({
+  getTokenFn: async () => {
+    // Return current access token
+    return getCurrentAccessToken();
+  },
+  refreshTokenFn: async () => {
+    // Refresh and return new token
+    return await refreshAccessToken();
+  }
+});
+
+const echo = new EchoClient({ tokenProvider });
+```
+
+## Token Provider Interface
+
+All token providers implement the `TokenProvider` interface:
+
+```typescript
+import type { TokenProvider } from '@merit-systems/echo-typescript-sdk';
+```
+
+### TokenProvider
+
+The `TokenProvider` interface defines the contract for providing access tokens:
+
+```typescript
+interface TokenProvider {
+  /**
+   * Get the current access token
+   * @returns Promise that resolves to the access token or null if not available
+   */
+  getAccessToken(): Promise<string | null>;
+
+  /**
+   * Refresh the access token when it expires or becomes invalid
+   * @returns Promise that resolves when the token is refreshed
+   */
+  refreshToken(): Promise<string | void>;
+
+  /**
+   * Optional callback to be called when a token refresh fails
+   * @param error The error that occurred during refresh
+   */
+  onRefreshError?(error: Error): void;
+}
+```
+
+## Creating Custom Token Providers
+
+```typescript
+import type { TokenProvider } from '@merit-systems/echo-typescript-sdk';
+
+class CustomTokenProvider implements TokenProvider {
+  async getToken(): Promise<string | null> {
+    // Your custom token retrieval logic
+    return await getTokenFromCustomSource();
+  }
+
+  async refreshToken(): Promise<string | null> {
+    // Your custom token refresh logic
+    return await refreshTokenFromCustomSource();
+  }
+}
+
+const echo = new EchoClient({
+  tokenProvider: new CustomTokenProvider()
+});
+```
+
+
+# Client
+URL: /docs/typescript-sdk/client
+
+***
+
+title: Client
+description: EchoClient setup, configuration, and environment management
+------------------------------------------------------------------------
+
+# Client
+
+The `EchoClient` is your gateway to the Echo platform, providing access to all platform resources and operations.
+
+## Basic Setup
+
+```typescript
+import { EchoClient } from '@merit-systems/echo-typescript-sdk';
+
+const echo = new EchoClient({
+  apiKey: 'your-api-key',
+});
+```
+
+## Configuration Options
+
+```typescript
+import type { EchoClientOptions } from '@merit-systems/echo-typescript-sdk';
+```
+
+### EchoClientOptions
+
+<AutoTypeTable path="../../sdk/ts/src/client.ts" name="EchoClientOptions" />
+
+## Environment Configuration
+
+### Using Environment Variables
+
+```typescript
+// Automatically uses ECHO_API_KEY and ECHO_BASE_URL if available
+const echo = new EchoClient();
+
+// Or explicitly set via environment
+process.env.ECHO_API_KEY = 'your-api-key';
+process.env.ECHO_BASE_URL = 'https://echo.merit.systems';
+```
+
+### Configuration Precedence
+
+1. **Explicit options** - Passed directly to constructor
+2. **Environment variables** - `ECHO_API_KEY`, `ECHO_BASE_URL`
+3. **Defaults** - `https://echo.merit.systems`
+
+## Resource Access
+
+The client provides access to all platform resources:
+
+```typescript
+const echo = new EchoClient({ apiKey: 'your-key' });
+
+// Resource modules
+echo.apps; // App management
+echo.balance; // Account balance
+echo.payments; // Payment operations
+echo.models; // Supported models
+echo.users; // User information
+```
+
+## Error Handling
+
+```typescript
+import { EchoError } from '@merit-systems/echo-typescript-sdk';
+
+try {
+  const balance = await echo.balance.getBalance();
+} catch (error) {
+  if (error instanceof EchoError) {
+    console.log('Echo API Error:', error.code, error.message);
+  } else {
+    console.log('Network Error:', error);
+  }
+}
+```
+
+## Advanced Configuration
+
+### Custom Base URL
+
+```typescript
+const echo = new EchoClient({
+  apiKey: 'your-key',
+  baseUrl: 'https://custom-echo-instance.com',
+});
+```
+
+### With Token Provider
+
+```typescript
+import { ApiKeyTokenProvider } from '@merit-systems/echo-typescript-sdk';
+
+const tokenProvider = new ApiKeyTokenProvider('your-api-key');
+
+const echo = new EchoClient({
+  tokenProvider,
+});
+```
+
+For OAuth and advanced authentication patterns, see the [Authentication](/docs/typescript-sdk/authentication) section.
+
+
+# Overview
+URL: /docs/typescript-sdk
+
+***
+
+title: Overview
+description: Foundation SDK for direct Echo platform access and AI provider integration
+---------------------------------------------------------------------------------------
+
+# TypeScript SDK
+
+The Echo TypeScript SDK is the foundational SDK that provides direct API access to the Echo platform. It serves as the base for the React and Next.js SDKs, offering maximum flexibility for server-side applications, CLI tools, and custom integrations.
+
+## Use Cases
+
+* **Server-side applications** - API routes, backends, microservices
+* **CLI tools** - Command-line applications with AI billing
+* **Custom integrations** - When you need direct platform control
+* **Foundation for other SDKs** - React and Next.js SDKs are built on this
+
+## Installation
+
+<Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+  <Tab value="npm">
+    ```bash
+    npm install @merit-systems/echo-typescript-sdk
+    ```
+  </Tab>
+
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @merit-systems/echo-typescript-sdk
+    ```
+  </Tab>
+
+  <Tab value="yarn">
+    ```bash
+    yarn add @merit-systems/echo-typescript-sdk
+    ```
+  </Tab>
+
+  <Tab value="bun">
+    ```bash
+    bun add @merit-systems/echo-typescript-sdk
+    ```
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+### Platform Operations
+
+```typescript
+import { EchoClient } from '@merit-systems/echo-typescript-sdk';
+
+const echo = new EchoClient({
+  apiKey: 'your-api-key'
+});
+
+// Check balance and create payment links
+const balance = await echo.balance.getBalance();
+const paymentLink = await echo.payments.createPaymentLink({
+  amount: 10,
+  description: 'Credits'
+});
+```
+
+### AI Integration
+
+```typescript
+import { createEchoOpenAI } from '@merit-systems/echo-typescript-sdk';
+import { generateText } from 'ai';
+
+// Create AI provider with Echo billing
+const openai = createEchoOpenAI(
+  { appId: 'your-echo-app-id' },
+  async () => 'your-api-key'
+);
+
+// Generate text with automatic billing
+const { text } = await generateText({
+  model: openai('gpt-5'),
+  prompt: 'Hello world'
+});
+```
+
+## Documentation Sections
+
+* **[Client](/docs/typescript-sdk/client)** - EchoClient setup, configuration, and environment management
+* **[Authentication](/docs/typescript-sdk/authentication)** - API keys, token providers, and OAuth integration patterns
+* **[Resources](/docs/typescript-sdk/resources)** - Platform operations: apps, balance, payments, users, models
+
+## Architecture
+
+The TypeScript SDK consists of two main components:
+
+1. **Platform Client** - `EchoClient` for account, billing, and app management
+2. **AI Providers** - Factory functions that create Vercel AI SDK compatible providers with Echo billing
+
+This separation allows you to use platform operations independently or combine them with AI functionality as needed.
+
+
+# Resources
+URL: /docs/typescript-sdk/resources
+
+***
+
+title: Resources
+description: Platform operations - apps, balance, payments, users, models
+-------------------------------------------------------------------------
+
+# Resources
+
+The EchoClient provides access to platform resources through dedicated modules. Each resource handles a specific domain of Echo platform operations.
+
+## Apps Resource
+
+Manage your Echo applications and retrieve app information.
+
+```typescript
+const apps = await echo.apps.listEchoApps();
+const app = await echo.apps.getEchoApp('app-id');
+const appUrl = echo.apps.getAppUrl('app-id');
+```
+
+### Get App
+
+```typescript
+const app = await echo.apps.getEchoApp('app-id');
+```
+
+#### Parameters
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetAppsByIdParams" />
+
+#### Response
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetAppsByIdResponse" />
+
+### List Apps
+
+```typescript
+const apps = await echo.apps.listEchoApps(params);
+```
+
+#### Parameters (optional)
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetAppsQuery" />
+
+#### Response
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetAppsResponse" />
+
+### Get App URL
+
+```typescript
+const appUrl = echo.apps.getAppUrl('app-id');
+```
+
+#### Response
+
+`https://echo.merit.systems/app/{app-id}`
+
+### Types
+
+```typescript
+import type {
+  GetAppsByIdResponse,
+  GetAppsByIdParams,
+  GetAppsResponse,
+  GetAppsQuery,
+} from '@merit-systems/echo-typescript-sdk';
+```
+
+### Methods
+
+* **`listEchoApps(query?)`** - List all Echo apps with optional pagination and search
+* **`getEchoApp(appId)`** - Get a specific Echo app by ID
+* **`getAppUrl(appId)`** - Get app URL for a specific Echo app
+
+## Balance Resource
+
+Check account balance and free tier usage across applications.
+
+```typescript
+const balance = await echo.balance.getBalance();
+const freeBalance = await echo.balance.getFreeBalance('app-id');
+```
+
+### Get Balance
+
+Get the currently authenticated user's global echo balance.
+
+```typescript
+const balance = await echo.balance.getBalance();
+```
+
+#### Response
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetBalanceResponse" />
+
+### Get Free Balance
+
+Get the currently authenticated user's free tier balance for your specific app.
+
+```typescript
+const freeBalance = await echo.balance.getFreeBalance('app-id');
+```
+
+#### Parameters
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetBalanceByIdFreeParams" />
+
+#### Response
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetBalanceByIdFreeResponse" />
+
+### Types
+
+```typescript
+import type {
+  GetBalanceResponse,
+  GetBalanceByIdFreeResponse,
+  GetBalanceByIdFreeParams,
+} from '@merit-systems/echo-typescript-sdk';
+```
+
+### Methods
+
+* **`getBalance()`** - Get current balance for the authenticated user across all apps
+* **`getFreeBalance(echoAppId)`** - Get free tier balance for a specific app
+
+## Payments Resource
+
+Handle payment links and credit purchases through Stripe integration.
+
+```typescript
+const paymentLink = await echo.payments.createPaymentLink({
+  amount: 25,
+  description: 'Echo Credits',
+});
+
+const paymentUrl = await echo.payments.getPaymentUrl(10, 'Quick Top-up');
+```
+
+### Create Payment Link
+
+Create a payment link for purchasing credits.
+
+```typescript
+const paymentLink = await echo.payments.createPaymentLink({
+  amount: 25,
+  description: 'Echo Credits',
+});
+```
+
+#### Request Body
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="CreateStripePaymentLinkBody" />
+
+#### Response
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="CreateStripePaymentLinkResponse" />
+
+### Get Payment URL
+
+Get a payment URL for purchasing credits.
+
+```typescript
+const paymentUrl = await echo.payments.getPaymentUrl(10, 'Quick Top-up');
+```
+
+#### Response
+
+Returns a `string` containing the payment URL.
+
+### Methods
+
+* **`createPaymentLink(request)`** - Create detailed payment link with options
+* **`getPaymentUrl(amount, description?, successUrl?)`** - Quick payment URL generation
+
+### Types
+
+```typescript
+import type {
+  CreateStripePaymentLinkBody,
+  CreateStripePaymentLinkResponse,
+  GetBasePaymentLinkQuery,
+  GetBasePaymentLinkResponse,
+} from '@merit-systems/echo-typescript-sdk';
+```
+
+## Models Resource
+
+Get information about supported LLM models, pricing, and capabilities.
+
+```typescript
+const chatModels = await echo.models.listSupportedChatModels();
+const imageModels = await echo.models.listSupportedImageModels();
+```
+
+### Methods
+
+* **`listSupportedChatModels()`** - Get all supported chat models with pricing and metadata
+* **`listSupportedImageModels()`** - Get all supported image models with pricing and metadata
+
+### Types
+
+```typescript
+import type {
+  SupportedModel,
+  SupportedImageModel,
+} from '@merit-systems/echo-typescript-sdk';
+```
+
+#### SupportedModel
+
+<AutoTypeTable path="../../sdk/ts/src/supported-models/types.ts" name="SupportedModel" />
+
+#### SupportedImageModel
+
+<AutoTypeTable path="../../sdk/ts/src/supported-models/types.ts" name="SupportedImageModel" />
+
+## Users Resource
+
+Manage user information and referral code registration.
+
+```typescript
+const user = await echo.users.getUserInfo();
+const referralResult = await echo.users.registerReferralCode(
+  'app-id',
+  'REFERRAL123'
+);
+```
+
+### Get User Info
+
+Get the currently authenticated user's information.
+
+```typescript
+const user = await echo.users.getUserInfo();
+```
+
+#### Response
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="GetUserResponse" />
+
+### Register Referral Code
+
+Register a referral code for benefits.
+
+```typescript
+const referralResult = await echo.users.registerReferralCode(
+  'app-id',
+  'REFERRAL123'
+);
+```
+
+#### Request Body
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="CreateUserReferralBody" />
+
+#### Response
+
+<AutoTypeTable path="../../sdk/ts/src/api-types.ts" name="CreateUserReferralResponse" />
+
+### Types
+
+```typescript
+import type {
+  GetUserResponse,
+  CreateUserReferralBody,
+  CreateUserReferralResponse,
+} from '@merit-systems/echo-typescript-sdk';
+```
+
+### Methods
+
+* **`getUserInfo()`** - Get current user information and spending data
+* **`registerReferralCode(echoAppId, code)`** - Register referral code for benefits
+
+## Example Usage
+
+### Complete Platform Operations
+
+```typescript
+import { EchoClient } from '@merit-systems/echo-typescript-sdk';
+
+const echo = new EchoClient({ apiKey: process.env.ECHO_API_KEY });
+
+async function platformDemo() {
+  // Check user and balance
+  const user = await echo.users.getUserInfo();
+  const balance = await echo.balance.getBalance();
+
+  console.log(`User: ${user.email}, Balance: $${balance.balance}`);
+
+  // Create payment link if balance is low
+  if (balance.balance < 5) {
+    const payment = await echo.payments.createPaymentLink({
+      amount: 20,
+      description: 'Account Top-up',
+    });
+
+    console.log(`Payment link: ${payment.url}`);
+  }
+
+  // List available models
+  const chatModels = await echo.models.listSupportedChatModels();
+  const imageModels = await echo.models.listSupportedImageModels();
+  console.log(`Available chat models: ${chatModels.length}`);
+  console.log(`Available image models: ${imageModels.length}`);
+
+  // Get app information
+  const apps = await echo.apps.listEchoApps();
+  console.log(`Your apps: ${apps.length}`);
+}
+```
+
+
+# Overview
+URL: /docs/x402
+
+***
+
+title: Overview
+description: x402 payment protocol SDK for AI billing
+-----------------------------------------------------
+
+# x402 SDK
+
+The x402 SDK enables direct-to-protocol AI payments using crypto wallets. No API keys required - payments are handled via HTTP 402 status codes and on-chain signatures.
+
+## Installation
+
+<Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+  <Tab value="npm">
+    ```bash
+    npm install @merit-systems/ai-x402  
+    ```
+  </Tab>
+
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @merit-systems/ai-x402
+    ```
+  </Tab>
+
+  <Tab value="yarn">
+    ```bash
+    yarn add @merit-systems/ai-x402
+    ```
+  </Tab>
+
+  <Tab value="bun">
+    ```bash
+    bun add @merit-systems/ai-x402
+    ```
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+```typescript
+import { createX402OpenAI } from '@merit-systems/ai-x402';
+import { generateText } from 'ai';
+import { CdpClient } from '@coinbase/cdp-sdk';
+import { toAccount } from 'viem/accounts';
+
+// Create wallet using Coinbase Developer Platform
+const cdp = new CdpClient({
+  apiKeyId: process.env.CDP_API_KEY_ID,
+  apiKeySecret: process.env.CDP_API_KEY_SECRET,
+  walletSecret: process.env.CDP_WALLET_SECRET,
+});
+
+const account = await cdp.evm.getOrCreateAccount({
+  name: process.env.CDP_WALLET_OWNER,
+});
+
+const walletClient = toAccount(account);
+
+// Create OpenAI provider with automatic x402 payment handling
+const openai = createX402OpenAI(walletClient);
+
+// Use with Vercel AI SDK
+const { text } = await generateText({
+  model: openai('gpt-4o'),
+  prompt: 'Hello world'
+});
+```
+
+## How It Works
+
+1. First request returns HTTP 402 with payment requirements
+2. SDK creates payment signature using your wallet
+3. SDK retries request with `x-payment` header
+4. Request succeeds and payment settles on-chain
+
+## API
+
+### `createX402OpenAI(walletClient, baseRouterUrl?, echoAppId?)`
+
+Creates an OpenAI provider that handles x402 payments automatically.
+
+**Parameters:**
+
+* `walletClient` - x402 wallet signer
+* `baseRouterUrl` - Optional router URL (default: `https://echo.router.merit.systems`)
+* `echoAppId` - Optional Echo app ID for usage tracking and analytics
+
+**Returns:** OpenAI provider compatible with Vercel AI SDK
+
+## Custom Router
+
+```typescript
+const openai = createX402OpenAI(
+  walletClient,
+  'https://your-router.com'
+);
+```
+
+## Using Echo
+
+To track usage and analytics for your application, provide your Echo app ID:
+
+```typescript
+const openai = createX402OpenAI(
+  walletClient,
+  'https://echo.router.merit.systems',
+  'your-echo-app-id'
+);
+```
+
+The SDK will automatically include the `x-echo-app-id` header in all requests, enabling you to set a mark-up via Echo, which is automatically applied to your x402 transactions.
