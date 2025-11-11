@@ -155,6 +155,3 @@ tools/
    - Visit the deployed URL and perform a smoke test (sign-in flow, report upload, skeleton rendering).
    - Optionally promote the deployment to production once the checks pass.
 
-## License
-
-This repository is currently unlicensed scaffolding. Add a license before distributing or deploying broadly.
