@@ -144,6 +144,10 @@ function buildGliderSkeleton(): string {
   ].join('\n').trimEnd();
 }
 
+export async function generateGlideScript(context: BreakdownGenerationContext) {
+  return generateBreakdownDocument(context);
+}
+
 function buildPrompt(context: BreakdownGenerationContext): string {
   const { report, referenceBreakdowns, templates } = context;
 
