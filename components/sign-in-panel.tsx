@@ -3,8 +3,12 @@
 import { useCallback } from 'react';
 import { useEcho } from '@merit-systems/echo-next-sdk/client';
 
+type SignInAwareEchoContext = ReturnType<typeof useEcho> & {
+  isSigningIn?: boolean;
+};
+
 export function SignInPanel() {
-  const { signIn, isSigningIn } = useEcho();
+  const { signIn, isSigningIn } = useEcho() as SignInAwareEchoContext;
 
   const handleSignIn = useCallback(async () => {
     try {

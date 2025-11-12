@@ -3,8 +3,23 @@
 import { useMemo } from 'react';
 import { useEcho } from '@merit-systems/echo-next-sdk/client';
 
+type BalanceAwareEchoContext = ReturnType<typeof useEcho> & {
+  balance?: {
+    credits?: number;
+    currency?: string;
+  };
+  balanceError?: unknown;
+  isLoadingBalance?: boolean;
+};
+
 export function BalanceCard() {
-  const { balance, isLoadingBalance: isLoading, balanceError: error } = useEcho();
+  const {
+    balance,
+    balanceError: error,
+    isLoadingBalance,
+  } = useEcho() as BalanceAwareEchoContext;
+
+  const isLoading = isLoadingBalance ?? false;
 
   const statusLabel = useMemo(() => {
     if (isLoading) return '⏳ Fetching balance…';

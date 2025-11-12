@@ -1,20 +1,23 @@
-import { generateGlideScript } from './generator';
-import { loadReferenceTemplates } from './template-loader';
+import { generateBreakdownDocument } from './generator';
+import { loadBreakdownReferences, loadGliderTemplates } from './template-loader';
 import { parseVulnerabilityReport } from './parser';
-import type { GlideGenerationContext } from './types';
+import type { BreakdownGenerationContext } from './types';
 
-export async function buildGenerationContext(markdown: string): Promise<GlideGenerationContext> {
+export async function buildGenerationContext(markdown: string): Promise<BreakdownGenerationContext> {
   const report = await parseVulnerabilityReport(markdown);
-  const { strictTemplate, broadTemplate } = await loadReferenceTemplates();
+  const [templates, referenceBreakdowns] = await Promise.all([
+    loadGliderTemplates(),
+    loadBreakdownReferences(),
+  ]);
 
   return {
     report,
-    strictTemplate,
-    broadTemplate,
+    templates,
+    referenceBreakdowns,
   };
 }
 
 export async function generateFromMarkdown(markdown: string) {
   const context = await buildGenerationContext(markdown);
-  return generateGlideScript(context);
+  return generateBreakdownDocument(context);
 }
