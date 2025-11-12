@@ -125,7 +125,7 @@ export function ReportUploader() {
           <div className="mixer-control">
             <label htmlFor="source-input" className="input-label">
               Source (optional)
-              <span className="text-muted"> - e.g., "Sherlock Contest #123" or "GitHub Issue #456"</span>
+              <span className="text-muted"> - e.g., &ldquo;Sherlock Contest #123&rdquo; or &ldquo;GitHub Issue #456&rdquo;</span>
             </label>
             <input
               id="source-input"
